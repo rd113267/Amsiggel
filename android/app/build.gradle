@@ -83,9 +83,6 @@ project.ext.react = [
 
 apply from: "../../node_modules/react-native/react.gradle"
 
-crashlytics {
-  enableNdk true
-}
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -132,6 +129,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+
     defaultConfig {
         applicationId "com.amsiggel"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -154,20 +152,23 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-    }
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
-          release {
+        release {
             if (project.hasProperty('AMSIGGEL_UPLOAD_STORE_FILE')) {
                 storeFile file(AMSIGGEL_UPLOAD_STORE_FILE)
                 storePassword AMSIGGEL_UPLOAD_STORE_PASSWORD
                 keyAlias AMSIGGEL_KEY_ALIAS
                 keyPassword AMSIGGEL_UPLOAD_KEY_PASSWORD
             }
-            minifyEnabled enableProguardInReleaseBuilds
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+          release {
+              signingConfig signingConfigs.release
+              minifyEnabled enableProguardInReleaseBuilds
+              proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 

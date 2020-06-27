@@ -1,5 +1,5 @@
 import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
-import {View, Text, SafeAreaView, Dimensions} from 'react-native';
+import {View, Text, SafeAreaView, Dimensions, Platform} from 'react-native';
 import VideoPlayer from 'react-native-video-controls';
 import TopBanner from './commons/TopBanner';
 import {getVideoDetails, getHomeVideoID} from '../helpers';
@@ -36,11 +36,22 @@ const Home: FunctionComponent<TabProps> = ({language}) => {
           <View style={{height: width * 0.75}}>
             <VideoPlayer
               disableBack
-              disableFullscreen
+              disableFullscreen={Platform.OS === 'android'}
               disableVolume
-              ref={videoRef}
+              ref={(videoPlayer: any) => {
+                if (videoPlayer && videoPlayer.player) {
+                  videoRef.current = videoPlayer.player.ref;
+                }
+              }}
+              onEnterFullscreen={() =>
+                videoRef.current?.presentFullscreenPlayer()
+              }
+              onExitFullscreen={() =>
+                videoRef.current?.dismissFullscreenPlayer()
+              }
               source={{uri}}
               paused={paused}
+              onLoad={() => videoRef.current?.seek(0)}
               onPaused={() => setPaused(true)}
               //onPlay={() => setPaused(false)}
               style={{height: width * 0.75}}
