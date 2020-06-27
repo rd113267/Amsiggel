@@ -42,7 +42,7 @@ const Home: FunctionComponent<TabProps> = ({language}) => {
               source={{uri}}
               paused={paused}
               onPaused={() => setPaused(true)}
-              onPlay={() => setPaused(false)}
+              //onPlay={() => setPaused(false)}
               style={{height: width * 0.75}}
             />
           </View>

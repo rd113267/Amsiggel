@@ -1,5 +1,5 @@
 import React, {FunctionComponent } from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
 import colors from '../../colors';
 import {Language} from '../../types';
 
@@ -7,7 +7,7 @@ const FlagBanner: FunctionComponent<{
   setNewLanguage: (language: Language) => void;
 }> = ({setNewLanguage}) => {
   return (
-    <View
+    <SafeAreaView
       style={{
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -44,7 +44,7 @@ const FlagBanner: FunctionComponent<{
           source={require('../../images/france-flag.png')}
         />
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 };
 
