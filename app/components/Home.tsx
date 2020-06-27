@@ -5,7 +5,6 @@ import TopBanner from './commons/TopBanner';
 import {getVideoDetails, getHomeVideoID} from '../helpers';
 import Video from 'react-native-video';
 import colors from '../colors';
-import FlagBanner from './commons/FlagBanner';
 import TabProps from '../types/TabProps';
 
 const {width} = Dimensions.get('window');
@@ -43,12 +42,9 @@ const Home: FunctionComponent<TabProps> = ({language}) => {
                   videoRef.current = videoPlayer.player.ref;
                 }
               }}
-              onEnterFullscreen={() =>
-                videoRef.current?.presentFullscreenPlayer()
-              }
-              onExitFullscreen={() =>
-                videoRef.current?.dismissFullscreenPlayer()
-              }
+              onEnterFullscreen={() => {
+                videoRef.current?.presentFullscreenPlayer();
+              }}
               source={{uri}}
               paused={paused}
               onLoad={() => videoRef.current?.seek(0)}
