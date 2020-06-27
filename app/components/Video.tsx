@@ -1,10 +1,11 @@
 import React, {FunctionComponent} from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import TabProps from '../types/TabProps';
+import FlagBanner from './commons/FlagBanner';
 
-const Video: FunctionComponent = () => {
+const Video: FunctionComponent<TabProps> = ({language}) => {
   return (
     <View>
-      <Text />
     </View>
   );
 };
