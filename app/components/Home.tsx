@@ -46,7 +46,13 @@ const Home: FunctionComponent<TabProps> = ({
   );
 
   useEffect(() => {
-    fullscreen ? StatusBar.setHidden(true) : StatusBar.setHidden(false);
+    if (fullscreen) {
+      StatusBar.setHidden(true);
+      setPaused(false);
+    } else {
+      setPaused(true);
+      StatusBar.setHidden(false);
+    }
   }, [fullscreen]);
 
   useEffect(() => {
@@ -74,7 +80,7 @@ const Home: FunctionComponent<TabProps> = ({
   useBackHandler(() => {
     if (fullscreen) {
       setPaused(true);
-      Orientation.unlockAllOrientations();
+      Orientation.lockToPortrait();
       return true;
     }
   });
@@ -88,11 +94,8 @@ const Home: FunctionComponent<TabProps> = ({
         paused={paused}
         onPause={() => setPaused(true)}
         onPlay={() => setPaused(false)}
-        onBack={() => {
-          setPaused(true);
-          Orientation.unlockAllOrientations();
-        }}
-        onEnd={() => Orientation.unlockAllOrientations()}
+        onBack={() => Orientation.lockToPortrait()}
+        onEnd={() => Orientation.lockToPortrait()}
       />
     );
   }
@@ -102,7 +105,6 @@ const Home: FunctionComponent<TabProps> = ({
         <View style={{flex: 1}}>
           <TouchableOpacity
             onPress={() => {
-              setPaused(false);
               if (Platform.OS === 'ios') {
                 videoRef.current?.presentFullscreenPlayer();
               } else {
