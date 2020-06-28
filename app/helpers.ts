@@ -30,3 +30,17 @@ export const getHomeVideoID = (language: string) => {
       return constants.BERBER_VIMEO_CODE;
   }
 };
+
+export const getAudioLinks = (
+  language?: string,
+): {full: string; firstHalf: string; secondHalf: string} => {
+  switch (language) {
+    case Language.ENGLISH:
+      return {full: '335', firstHalf: '556', secondHalf: '558'};
+    case Language.FRENCH: {
+      return {full: '777', firstHalf: '773', secondHalf: '775'};
+    }
+    default:
+      return {full: '585', firstHalf: '474', secondHalf: '476'};
+  }
+};
