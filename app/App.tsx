@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
 import Audio from './components/Audio';
 import Story from './components/Story';
@@ -15,8 +16,18 @@ import FlagBanner from './components/commons/FlagBanner';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: colors.primary,
+    accent: colors.secondary,
+  },
+};
+
 const App = () => {
   const {language, setNewLanguage} = useLanguage();
+  const [fullscreen, setFullscreen] = useState(false);
   const Tabs = () => {
     return (
       <Tab.Navigator
@@ -28,14 +39,19 @@ const App = () => {
         }}>
         <Tab.Screen
           name="Home"
-          children={() => <Home language={language} />}
+          children={() => (
+            <Home
+              fullscreen={fullscreen}
+              setFullscreen={setFullscreen}
+              language={language}
+            />
+          )}
           options={(route) => ({
+            tabBarVisible: !fullscreen,
             tabBarIcon: ({focused, color, size}) => (
               <Image
-                style={{tintColor: color}}
+                style={{tintColor: color, height: size, width: size}}
                 source={require('./images/home.png')}
-                height={size}
-                width={size}
               />
             ),
           })}
@@ -46,10 +62,8 @@ const App = () => {
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
-                style={{tintColor: color}}
+                style={{tintColor: color, height: size, width: size}}
                 source={require('./images/headphone.png')}
-                height={size}
-                width={size}
               />
             ),
           })}
@@ -60,10 +74,8 @@ const App = () => {
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
-                style={{tintColor: color}}
+                style={{tintColor: color, height: size, width: size}}
                 source={require('./images/document.png')}
-                height={size}
-                width={size}
               />
             ),
           })}
@@ -74,10 +86,8 @@ const App = () => {
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
-                style={{tintColor: color}}
+                style={{tintColor: color, height: size, width: size}}
                 source={require('./images/video.png')}
-                height={size}
-                width={size}
               />
             ),
           })}
@@ -88,10 +98,8 @@ const App = () => {
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
-                style={{tintColor: color}}
+                style={{tintColor: color, height: size, width: size}}
                 source={require('./images/mail.png')}
-                height={size}
-                width={size}
               />
             ),
           })}
@@ -100,17 +108,20 @@ const App = () => {
     );
   };
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Tabs"
-          component={Tabs}
-          options={{
-            header: () => <FlagBanner setNewLanguage={setNewLanguage} />,
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name="Tabs"
+            component={Tabs}
+            options={{
+              headerShown: !fullscreen,
+              header: () => <FlagBanner setNewLanguage={setNewLanguage} />,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 };
 

@@ -1,62 +1,131 @@
-import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
-import {View, Text, SafeAreaView, Dimensions, Platform} from 'react-native';
-import VideoPlayer from 'react-native-video-controls';
-import TopBanner from './commons/TopBanner';
-import {getVideoDetails, getHomeVideoID} from '../helpers';
+import React, {
+  FunctionComponent,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
+import {
+  View,
+  Text,
+  Dimensions,
+  Alert,
+  StatusBar,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
+import Orientation from 'react-native-orientation-locker';
 import Video from 'react-native-video';
-import colors from '../colors';
+import {getVideoDetails, getHomeVideoID} from '../helpers';
 import TabProps from '../types/TabProps';
+import {ActivityIndicator} from 'react-native-paper';
+import VideoPlayer from 'react-native-video-controls';
+import useBackHandler from '../hooks/UseBackHandler';
 
 const {width} = Dimensions.get('window');
+const {height} = Dimensions.get('screen');
 
-const Home: FunctionComponent<TabProps> = ({language}) => {
+const videoHeight = width * 0.75;
+
+const Home: FunctionComponent<TabProps> = ({
+  language,
+  fullscreen,
+  setFullscreen,
+}) => {
   const [uri, setUri] = useState('');
   const [paused, setPaused] = useState(true);
-  const [thumbnail, setThumbnail] = useState('');
-  const videoRef = useRef<Video>();
+  const [loading, setLoading] = useState(true);
+  const videoRef = useRef<Video>(null);
+  const handleOrientation = useCallback(
+    (orientation: string) => {
+      orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT'
+        ? setFullscreen(true)
+        : setFullscreen(false);
+    },
+    [setFullscreen],
+  );
+
+  useEffect(() => {
+    fullscreen ? StatusBar.setHidden(true) : StatusBar.setHidden(false);
+  }, [fullscreen]);
+
   useEffect(() => {
     const getDetails = async () => {
       if (language) {
+        setLoading(true);
         const id = getHomeVideoID(language);
         console.log(id);
         const {thumbnailUrl, videoUrl, video} = await getVideoDetails(id);
         console.log(video);
         setUri(videoUrl);
-        setThumbnail(thumbnailUrl);
+        setLoading(false);
       }
     };
     getDetails();
   }, [language]);
+  useEffect(() => {
+    Orientation.addOrientationListener(handleOrientation);
+
+    return () => {
+      Orientation.removeOrientationListener(handleOrientation);
+    };
+  }, [handleOrientation]);
+
+  useBackHandler(() => {
+    if (fullscreen) {
+      setPaused(true);
+      Orientation.unlockAllOrientations();
+      return true;
+    }
+  });
+
+  if (fullscreen && uri) {
+    return (
+      <VideoPlayer
+        source={{uri}}
+        disableVolume
+        disableFullscreen
+        paused={paused}
+        onPause={() => setPaused(true)}
+        onPlay={() => setPaused(false)}
+        onBack={() => {
+          setPaused(true);
+          Orientation.unlockAllOrientations();
+        }}
+        onEnd={() => Orientation.unlockAllOrientations()}
+      />
+    );
+  }
   return (
-    <SafeAreaView style={{backgroundColor: colors.primary}}>
-      <TopBanner />
-      <View style={{backgroundColor: '#fff'}}>
-        {!!uri && (
-          <View style={{height: width * 0.75}}>
-            <VideoPlayer
-              disableBack
-              disableFullscreen={Platform.OS === 'android'}
-              disableVolume
-              ref={(videoPlayer: any) => {
-                if (videoPlayer && videoPlayer.player) {
-                  videoRef.current = videoPlayer.player.ref;
-                }
-              }}
-              onEnterFullscreen={() => {
+    <>
+      {!loading && uri ? (
+        <View style={{flex: 1}}>
+          <TouchableOpacity
+            onPress={() => {
+              setPaused(false);
+              if (Platform.OS === 'ios') {
                 videoRef.current?.presentFullscreenPlayer();
-              }}
+              } else {
+                Orientation.lockToLandscape();
+              }
+            }}>
+            <Video
+              ref={videoRef}
               source={{uri}}
-              paused={paused}
+              paused={true}
               onLoad={() => videoRef.current?.seek(0)}
-              onPaused={() => setPaused(true)}
               //onPlay={() => setPaused(false)}
-              style={{height: width * 0.75}}
+              style={{height: videoHeight}}
+              resizeMode="contain"
+              //controls
             />
-          </View>
-        )}
-        <Text />
-      </View>
-    </SafeAreaView>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <ActivityIndicator style={{marginTop: videoHeight / 2}} />
+      )}
+      <Text />
+    </>
   );
 };
 

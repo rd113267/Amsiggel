@@ -10,7 +10,8 @@ export const getVideoDetails = async (
     const {video, request} = await res.json();
     return {
       thumbnailUrl: video.thumbs['640'],
-      videoUrl: request.files.hls.cdns[request.files.hls.default_cdn].url,
+      //videoUrl: request.files.hls.cdns[request.files.hls.default_cdn].url,
+      videoUrl: request.files.progressive[0].url,
       video,
     };
   } catch (e) {
