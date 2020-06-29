@@ -15,12 +15,15 @@ import {
   Platform,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Video from 'react-native-video';
 import {getVideoDetails, getHomeVideoID} from '../helpers';
 import TabProps from '../types/TabProps';
 import {ActivityIndicator} from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import useBackHandler from '../hooks/UseBackHandler';
+import globalStyles from '../styles/globalStyles';
+import colors from '../colors';
 
 const {width} = Dimensions.get('window');
 const {height} = Dimensions.get('screen');
@@ -69,6 +72,7 @@ const Home: FunctionComponent<TabProps> = ({
     };
     getDetails();
   }, [language]);
+
   useEffect(() => {
     Orientation.addOrientationListener(handleOrientation);
 
@@ -76,6 +80,12 @@ const Home: FunctionComponent<TabProps> = ({
       Orientation.removeOrientationListener(handleOrientation);
     };
   }, [handleOrientation]);
+
+  useEffect(() => {
+    if (Platform.OS === 'android' && !Orientation.isLocked()) {
+      Orientation.lockToPortrait();
+    }
+  }, []);
 
   useBackHandler(() => {
     if (fullscreen) {
@@ -102,7 +112,7 @@ const Home: FunctionComponent<TabProps> = ({
   return (
     <>
       {!loading && uri ? (
-        <View style={{flex: 1}}>
+        <View>
           <TouchableOpacity
             onPress={() => {
               if (Platform.OS === 'ios') {
@@ -121,6 +131,14 @@ const Home: FunctionComponent<TabProps> = ({
               resizeMode="contain"
               //controls
             />
+            <View>
+              <Icon
+                name="play-circle"
+                size={100}
+                color={colors.primary}
+                style={globalStyles.playButtonContainer}
+              />
+            </View>
           </TouchableOpacity>
         </View>
       ) : (

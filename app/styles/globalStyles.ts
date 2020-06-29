@@ -1,13 +1,18 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+const {width} = Dimensions.get('window');
+const {height} = Dimensions.get('screen');
+
+const videoHeight = width * 0.75;
 
 export default StyleSheet.create({
   playButtonContainer: {
-    //position: 'absolute',
-    //top: 0,
-    // right: 0,
-    // left: 0,
-    // bottom: 0,
+    position: 'absolute',
+    // left: '38%',
     // alignItems: 'center',
     // justifyContent: 'center',
+    marginTop: -(videoHeight/2 + 50),
+    marginLeft: width / 2 - 50,
+    zIndex: 9,
   },
 });
