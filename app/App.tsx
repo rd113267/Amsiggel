@@ -130,7 +130,8 @@ const App = () => {
                 if (!route.state || route.state.index === 0) {
                   return <FlagBanner setNewLanguage={setNewLanguage} />;
                 }
-                return <Header {...props} />;
+                // return <Header {...props} />;
+                return null;
               },
             })}
           />

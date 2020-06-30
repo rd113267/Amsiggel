@@ -1,8 +1,7 @@
 import React, {FunctionComponent} from 'react';
-import {View, Text, Linking, Platform, Image} from 'react-native';
+import {View, Linking, Platform, Image} from 'react-native';
 import Share from 'react-native-share';
 import TabProps from '../types/TabProps';
-import FlagBanner from './commons/FlagBanner';
 import {getAudioLinks, getAudioLinkText} from '../helpers';
 import {Button} from 'react-native-paper';
 import styles from '../styles/components/Audio';
@@ -38,7 +37,12 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
       <View style={{flexDirection: 'row'}}>
         {firstRowImages.map((image) => {
           return (
-            <Image style={{flex: 1}} resizeMode="contain" source={image} />
+            <Image
+              key={image}
+              style={{flex: 1}}
+              resizeMode="contain"
+              source={image}
+            />
           );
         })}
       </View>
@@ -56,7 +60,12 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
       <View style={{flexDirection: 'row'}}>
         {secondRowImages.map((image) => {
           return (
-            <Image style={{flex: 1}} resizeMode="contain" source={image} />
+            <Image
+              key={image}
+              style={{flex: 1}}
+              resizeMode="contain"
+              source={image}
+            />
           );
         })}
       </View>

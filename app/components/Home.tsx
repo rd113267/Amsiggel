@@ -13,6 +13,7 @@ import {
   Platform,
   Image,
   ScrollView,
+  Text,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,6 +25,7 @@ import VideoPlayer from 'react-native-video-controls';
 import useBackHandler from '../hooks/UseBackHandler';
 import globalStyles from '../styles/globalStyles';
 import colors from '../colors';
+import {Language} from '../types';
 
 const {width} = Dimensions.get('window');
 const {height} = Dimensions.get('screen');
@@ -123,11 +125,13 @@ const Home: FunctionComponent<TabProps> = ({
             <Video
               ref={videoRef}
               source={{uri}}
-              paused={true}
+              paused={paused || Platform.OS === 'android'}
               onLoad={() => videoRef.current?.seek(0)}
               //onPlay={() => setPaused(false)}
               style={{height: videoHeight}}
               resizeMode="contain"
+              onFullscreenPlayerDidPresent={() => setPaused(false)}
+              onFullscreenPlayerDidDismiss={() => setPaused(true)}
               //controls
             />
             <View>
@@ -143,10 +147,51 @@ const Home: FunctionComponent<TabProps> = ({
       ) : (
         <ActivityIndicator style={{marginTop: videoHeight / 2}} />
       )}
+
       <View style={{alignItems: 'center', marginTop: 10}}>
-        <Image source={require('../images/arraw-ad-Tifinagh-sm.png')} />
-        <Image source={require('../images/arraw-ad-Latin-sm.png')} />
-        <Image source={require('../images/arraw-ad-Arabic-sm.png')} />
+        {language === Language.BERBER && (
+          <>
+            <Image source={require('../images/arraw-ad-Tifinagh-sm.png')} />
+            <Image source={require('../images/arraw-ad-Latin-sm.png')} />
+            <Image source={require('../images/arraw-ad-Arabic-sm.png')} />
+          </>
+        )}
+        {language === Language.ENGLISH && (
+          <>
+            <Text style={{fontSize: 28, marginBottom: 10}}>
+              The Quest Of Amsiggel
+            </Text>
+            <Text style={{fontSize: 15, lineHeight: 30, marginHorizontal: 10}}>
+              “A storm brought us this child, {'\n'} but he’ll outlive the
+              storm.{'\n'}
+              Born in Born in darkness, he’ll lead us into light. {'\n'}  Born
+              amidst thunder and lightning,  {'\n'} he’ll bring us peace from
+              all that beats down on us. {'\n'} We’ll call this child Amsiggel{' '}
+              {'\n'}
+               for he’ll search out hidden things. {'\n'}  He’ll discover what
+              we’ve never known  {'\n'}  and show us the Way of Peace.”
+            </Text>
+          </>
+        )}
+        {language === Language.FRENCH && (
+          <>
+            <Text style={{fontSize: 28, marginBottom: 10}}>
+              Le voyage d’Amsiggel
+            </Text>
+            <Text style={{fontStyle: 'italic', fontSize: 15, marginBottom: 10}}>
+              (Amsiggel = le chercheur)
+            </Text>
+            <Text style={{fontSize: 15, lineHeight: 30, marginHorizontal: 40, textAlign: 'center'}}>
+              Né parmi le tonnerre et la foudre, il nous apportera la paix et
+              nous délivrera de tout ce qui nous abat.{'\n'} Il découvrira ce
+              que nous avons toujours ignoré et nous montrera la Voie de la
+              Paix.» {'\n'}«Une tempête nous a apporté cet enfant, mais il
+              survivra à la tempête.{'\n'}
+              Né dans les ténèbres, il nous conduira à la lumière. {'\n'}Nous
+              l’appelerons Amsiggel, car il dénichera des choses cachées.
+            </Text>
+          </>
+        )}
       </View>
     </ScrollView>
   );
