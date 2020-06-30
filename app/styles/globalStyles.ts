@@ -11,7 +11,7 @@ export default StyleSheet.create({
     // left: '38%',
     // alignItems: 'center',
     // justifyContent: 'center',
-    marginTop: -(videoHeight/2 + 50),
+    marginTop: -(videoHeight / 2 + 50),
     marginLeft: width / 2 - 50,
     zIndex: 9,
   },

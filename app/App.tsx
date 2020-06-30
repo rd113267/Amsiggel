@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
@@ -39,6 +39,7 @@ const App = () => {
         }}>
         <Tab.Screen
           name="Home"
+          key="Home"
           children={() => (
             <Home
               fullscreen={fullscreen}
@@ -58,6 +59,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Audio"
+          key="Audio"
           children={() => <Audio language={language} />}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
@@ -70,6 +72,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Story"
+          key="Story"
           children={() => <Story language={language} />}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
@@ -82,6 +85,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Video"
+          key="Video"
           children={() => <Video language={language} />}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
@@ -94,6 +98,7 @@ const App = () => {
         />
         <Tab.Screen
           name="Contact"
+          key="Contact"
           children={() => <Contact language={language} />}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
@@ -114,10 +119,20 @@ const App = () => {
           <Stack.Screen
             name="Tabs"
             component={Tabs}
-            options={{
+            options={({route}) => ({
               headerShown: !fullscreen,
-              header: () => <FlagBanner setNewLanguage={setNewLanguage} />,
-            }}
+              headerTitle: '',
+              headerStyle: {
+                backgroundColor: colors.primary,
+              },
+              header: (props) => {
+                //@ts-ignore
+                if (!route.state || route.state.index === 0) {
+                  return <FlagBanner setNewLanguage={setNewLanguage} />;
+                }
+                return <Header {...props} />;
+              },
+            })}
           />
         </Stack.Navigator>
       </NavigationContainer>

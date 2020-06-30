@@ -53,28 +53,6 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
         }}>
         {fullText}
       </Button>
-      <Button
-        style={styles.button}
-        icon="download"
-        mode="contained"
-        uppercase={false}
-        onPress={() => {
-          const link = `${url}${firstHalf}`;
-          openLink(link);
-        }}>
-        {firstHalfText}
-      </Button>
-      <Button
-        style={styles.button}
-        icon="download"
-        mode="contained"
-        uppercase={false}
-        onPress={() => {
-          const link = `${url}${secondHalf}`;
-          openLink(link);
-        }}>
-        {secondHalfText}
-      </Button>
       <View style={{flexDirection: 'row'}}>
         {secondRowImages.map((image) => {
           return (

@@ -7,12 +7,12 @@ import React, {
 } from 'react';
 import {
   View,
-  Text,
   Dimensions,
-  Alert,
   StatusBar,
   TouchableOpacity,
   Platform,
+  Image,
+  ScrollView,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -65,7 +65,6 @@ const Home: FunctionComponent<TabProps> = ({
         const id = getHomeVideoID(language);
         console.log(id);
         const {thumbnailUrl, videoUrl, video} = await getVideoDetails(id);
-        console.log(video);
         setUri(videoUrl);
         setLoading(false);
       }
@@ -110,7 +109,7 @@ const Home: FunctionComponent<TabProps> = ({
     );
   }
   return (
-    <>
+    <ScrollView style={{backgroundColor: '#fff'}}>
       {!loading && uri ? (
         <View>
           <TouchableOpacity
@@ -144,8 +143,12 @@ const Home: FunctionComponent<TabProps> = ({
       ) : (
         <ActivityIndicator style={{marginTop: videoHeight / 2}} />
       )}
-      <Text />
-    </>
+      <View style={{alignItems: 'center', marginTop: 10}}>
+        <Image source={require('../images/arraw-ad-Tifinagh-sm.png')} />
+        <Image source={require('../images/arraw-ad-Latin-sm.png')} />
+        <Image source={require('../images/arraw-ad-Arabic-sm.png')} />
+      </View>
+    </ScrollView>
   );
 };
 
