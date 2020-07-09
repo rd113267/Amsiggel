@@ -60,7 +60,13 @@ const App = () => {
         <Tab.Screen
           name="Audio"
           key="Audio"
-          children={() => <Audio language={language} />}
+          children={() => (
+            <Audio
+              fullscreen={fullscreen}
+              setFullscreen={setFullscreen}
+              language={language}
+            />
+          )}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
@@ -73,7 +79,13 @@ const App = () => {
         <Tab.Screen
           name="Story"
           key="Story"
-          children={() => <Story language={language} />}
+          children={() => (
+            <Story
+              fullscreen={fullscreen}
+              setFullscreen={setFullscreen}
+              language={language}
+            />
+          )}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
@@ -86,7 +98,13 @@ const App = () => {
         <Tab.Screen
           name="Video"
           key="Video"
-          children={() => <Video language={language} />}
+          children={() => (
+            <Video
+              fullscreen={fullscreen}
+              setFullscreen={setFullscreen}
+              language={language}
+            />
+          )}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
@@ -99,7 +117,13 @@ const App = () => {
         <Tab.Screen
           name="Contact"
           key="Contact"
-          children={() => <Contact language={language} />}
+          children={() => (
+            <Contact
+              fullscreen={fullscreen}
+              setFullscreen={setFullscreen}
+              language={language}
+            />
+          )}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image

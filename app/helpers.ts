@@ -1,10 +1,8 @@
 import {Alert} from 'react-native';
-import {Language} from './types';
+import {Language, VideoDetails} from './types';
 import constants from './constants';
 
-export const getVideoDetails = async (
-  id: string,
-): Promise<{thumbnailUrl: string; videoUrl: string; video: any}> => {
+export const getVideoDetails = async (id: string): Promise<VideoDetails> => {
   try {
     const res = await fetch(`https://player.vimeo.com/video/${id}/config`);
     const {video, request} = await res.json();
@@ -28,6 +26,17 @@ export const getHomeVideoID = (language: string) => {
       return constants.FRENCH_VIMEO_CODE;
     default:
       return constants.BERBER_VIMEO_CODE;
+  }
+};
+
+export const getVideoIDs = (language: string) => {
+  switch (language) {
+    case Language.ENGLISH:
+      return constants.ENGLISH_VIMEO_CODES;
+    case Language.FRENCH:
+      return constants.FRENCH_VIMEO_CODES;
+    default:
+      return constants.BERBER_VIMEO_CODES;
   }
 };
 
@@ -69,4 +78,19 @@ export const getAudioLinkText = (
         secondHalfText: 'Amsiggel agzzum 10-17.mp3',
       };
   }
+};
+
+export const getDurationString = (seconds: number) => {
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = Math.round(seconds % 60);
+
+  const hours = h < 10 ? `0${h}` : h;
+  const minutes = m < 10 ? `0${m}` : m;
+  const secs = s < 10 ? `0${s}` : s;
+
+  if (h > 0) {
+    return `${hours}:${minutes}:${secs}`;
+  }
+  return `${minutes}:${secs}`;
 };
