@@ -148,7 +148,7 @@ const Home: FunctionComponent<TabProps> = ({
         <ActivityIndicator style={{marginTop: videoHeight / 2}} />
       )}
 
-      <View style={{alignItems: 'center', marginTop: 10}}>
+      {/* <View style={{alignItems: 'center', marginTop: 10}}>
         {language === Language.BERBER && (
           <>
             <Image source={require('../images/arraw-ad-Tifinagh-sm.png')} />
@@ -192,7 +192,7 @@ const Home: FunctionComponent<TabProps> = ({
             </Text>
           </>
         )}
-      </View>
+      </View> */}
     </ScrollView>
   );
 };
