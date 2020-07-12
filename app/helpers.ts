@@ -1,6 +1,7 @@
-import {Alert} from 'react-native';
+import {Alert, Platform, Linking} from 'react-native';
 import {Language, VideoDetails} from './types';
 import constants from './constants';
+import Share from 'react-native-share';
 
 export const getVideoDetails = async (id: string): Promise<VideoDetails> => {
   try {
@@ -93,4 +94,15 @@ export const getDurationString = (seconds: number) => {
     return `${hours}:${minutes}:${secs}`;
   }
   return `${minutes}:${secs}`;
+};
+
+export const downloadLink = (link: string) => {
+  if (Platform.OS === 'ios') {
+    Share.open({
+      url: link,
+      saveToFiles: true,
+    });
+  } else {
+    Linking.openURL(link);
+  }
 };

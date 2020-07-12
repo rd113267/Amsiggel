@@ -6,11 +6,13 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Text,
+  RefreshControl,
 } from 'react-native';
 import TabProps from '../types/TabProps';
 import {getVideoIDs, getVideoDetails, getDurationString} from '../helpers';
 import {VideoDetails} from '../types';
 import {ActivityIndicator} from 'react-native-paper';
+import colors from '../colors';
 
 const Video: FunctionComponent<TabProps> = ({language}) => {
   const [allVideoDetails, setAllVideoDetails] = useState<VideoDetails[]>();
@@ -32,11 +34,9 @@ const Video: FunctionComponent<TabProps> = ({language}) => {
     }
   }, [language]);
   return (
-    <SafeAreaView>
-      <ScrollView>
-        {loading || !allVideoDetails ? (
-          <ActivityIndicator />
-        ) : (
+    <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      {allVideoDetails && !loading ? (
+        <ScrollView>
           <View>
             {allVideoDetails.map((details) => {
               const {duration, title} = details.video;
@@ -56,10 +56,14 @@ const Video: FunctionComponent<TabProps> = ({language}) => {
                         flexDirection: 'row',
                         justifyContent: 'space-evenly',
                         flex: 1,
-                        alignItems: 'center'
+                        alignItems: 'center',
                       }}>
-                      <Text>{title}</Text>
-                      <Text>{durationString}</Text>
+                      <Text style={{color: colors.primary, fontWeight: 'bold'}}>
+                        {title}
+                      </Text>
+                      <Text style={{color: colors.primary}}>
+                        {durationString}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                   <View
@@ -69,8 +73,12 @@ const Video: FunctionComponent<TabProps> = ({language}) => {
               );
             })}
           </View>
-        )}
-      </ScrollView>
+        </ScrollView>
+      ) : (
+        <View style={{justifyContent: 'center'}}>
+          <ActivityIndicator />
+        </View>
+      )}
     </SafeAreaView>
   );
 };

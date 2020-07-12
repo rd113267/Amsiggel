@@ -1,8 +1,7 @@
 import React, {FunctionComponent} from 'react';
-import {View, Linking, Platform, Image} from 'react-native';
-import Share from 'react-native-share';
+import {View, Image} from 'react-native';
 import TabProps from '../types/TabProps';
-import {getAudioLinks, getAudioLinkText} from '../helpers';
+import {getAudioLinks, getAudioLinkText, downloadLink} from '../helpers';
 import {Button} from 'react-native-paper';
 import styles from '../styles/components/Audio';
 
@@ -22,16 +21,7 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
   const url = 'https://www.amsiggel.com/download/';
   const {full, firstHalf, secondHalf} = getAudioLinks(language);
   const {fullText, firstHalfText, secondHalfText} = getAudioLinkText(language);
-  const openLink = (link: string) => {
-    if (Platform.OS === 'ios') {
-      Share.open({
-        url: link,
-        saveToFiles: true,
-      });
-    } else {
-      Linking.openURL(link);
-    }
-  };
+
   return (
     <View style={{flex: 1, justifyContent: 'center'}}>
       <View style={{flexDirection: 'row'}}>
@@ -53,7 +43,7 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
         uppercase={false}
         onPress={() => {
           const link = `${url}${full}`;
-          openLink(link);
+          downloadLink(link);
         }}>
         {fullText}
       </Button>

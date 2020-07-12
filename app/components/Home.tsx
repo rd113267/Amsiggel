@@ -11,9 +11,6 @@ import {
   StatusBar,
   TouchableOpacity,
   Platform,
-  Image,
-  ScrollView,
-  Text,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,7 +22,6 @@ import VideoPlayer from 'react-native-video-controls';
 import useBackHandler from '../hooks/UseBackHandler';
 import globalStyles from '../styles/globalStyles';
 import colors from '../colors';
-import {Language} from '../types';
 
 const {width} = Dimensions.get('window');
 const {height} = Dimensions.get('screen');
@@ -111,7 +107,7 @@ const Home: FunctionComponent<TabProps> = ({
     );
   }
   return (
-    <ScrollView style={{backgroundColor: '#fff'}}>
+    <View style={{backgroundColor: '#fff', justifyContent: 'center', flex: 1}}>
       {!loading && uri ? (
         <View>
           <TouchableOpacity
@@ -193,7 +189,7 @@ const Home: FunctionComponent<TabProps> = ({
           </>
         )}
       </View> */}
-    </ScrollView>
+    </View>
   );
 };
 
