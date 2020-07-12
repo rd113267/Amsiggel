@@ -6,6 +6,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {downloadLink} from '../helpers';
+import {Button} from 'react-native-paper';
 
 const image1 = require('../images/audio9.jpg');
 const image2 = require('../images/audio10.jpg');
@@ -20,9 +21,6 @@ const firstRowImages = [image1, image2, image3, image4];
 const secondRowImages = [image5, image6, image7, image8];
 
 const Story: FunctionComponent<TabProps> = ({language}) => {
-  const [loading, setLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-
   const baseURL = 'https://www.amsiggel.com/wp-content/uploads/dlm_uploads/';
   const berberLinks = [
     `${baseURL}2014/05/Amsiggel-Tifinagh-transcription.pdf`,
@@ -34,102 +32,124 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
 
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      {language === Language.BERBER && (
-        <View>
-          <View style={{flexDirection: 'row'}}>
-            {firstRowImages.map((image) => {
-              return (
-                <Image
-                  key={image}
-                  style={{flex: 1}}
-                  resizeMode="contain"
-                  source={image}
-                />
-              );
-            })}
-          </View>
-          {berberLinks.map((link, index) => {
+      <View>
+        <View style={{flexDirection: 'row'}}>
+          {firstRowImages.map((image) => {
             return (
-              <TouchableOpacity
-                key={link}
-                onPress={() => downloadLink(link)}
-                style={{
-                  backgroundColor: colors.primary,
-                  margin: 20,
-                  marginBottom: 10,
-                  borderRadius: 5,
-                  padding: 5,
-                }}>
-                {index === 0 && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Icon
-                      name="download"
-                      color="#fff"
-                      style={{fontSize: 18, marginRight: 10, marginTop: 5}}
-                    />
-                    <Image
-                      source={require('../images/tifinagh.png')}
-                      style={{width: 70, height: 30}}
-                      resizeMode="contain"
-                    />
-                  </View>
-                )}
-                {index === 1 && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Icon
-                      name="download"
-                      color="#fff"
-                      style={{fontSize: 18, marginRight: 10, marginTop: 5}}
-                    />
-                    <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
-                  </View>
-                )}
-                {index === 2 && (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Icon
-                      name="download"
-                      color="#fff"
-                      style={{fontSize: 18, marginRight: 10, marginTop: 5}}
-                    />
-                    <Image
-                      source={require('../images/arabic.png')}
-                      style={{width: 70, height: 30}}
-                      resizeMode="contain"
-                    />
-                  </View>
-                )}
-              </TouchableOpacity>
+              <Image
+                key={image}
+                style={{flex: 1}}
+                resizeMode="contain"
+                source={image}
+              />
             );
           })}
-          <View style={{flexDirection: 'row'}}>
-            {secondRowImages.map((image) => {
+        </View>
+        {language === Language.BERBER && (
+          <>
+            {berberLinks.map((link, index) => {
               return (
-                <Image
-                  key={image}
-                  style={{flex: 1}}
-                  resizeMode="contain"
-                  source={image}
-                />
+                <TouchableOpacity
+                  key={link}
+                  onPress={() => downloadLink(link)}
+                  style={{
+                    backgroundColor: colors.primary,
+                    margin: 20,
+                    marginBottom: 10,
+                    borderRadius: 5,
+                    padding: 5,
+                  }}>
+                  {index === 0 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="download"
+                        color="#fff"
+                        style={{fontSize: 18, marginRight: 10, marginTop: 5}}
+                      />
+                      <Image
+                        source={require('../images/tifinagh.png')}
+                        style={{width: 70, height: 30}}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  )}
+                  {index === 1 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="download"
+                        color="#fff"
+                        style={{fontSize: 18, marginRight: 10, marginTop: 5}}
+                      />
+                      <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
+                    </View>
+                  )}
+                  {index === 2 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="download"
+                        color="#fff"
+                        style={{fontSize: 18, marginRight: 10, marginTop: 5}}
+                      />
+                      <Image
+                        source={require('../images/arabic.png')}
+                        style={{width: 70, height: 30}}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
               );
             })}
-          </View>
+          </>
+        )}
+        {language === Language.ENGLISH && (
+          <Button
+            icon="download"
+            mode="contained"
+            onPress={() => downloadLink(englishLink)}
+            uppercase={false}
+            style={{margin: 10}}>
+            Amsiggel English
+          </Button>
+        )}
+        {language === Language.FRENCH && (
+          <Button
+            icon="download"
+            mode="contained"
+            onPress={() => downloadLink(frenchLink)}
+            uppercase={false}
+            style={{margin: 10}}>
+            Amsiggel Français
+          </Button>
+        )}
+        <View style={{flexDirection: 'row'}}>
+          {secondRowImages.map((image) => {
+            return (
+              <Image
+                key={image}
+                style={{flex: 1}}
+                resizeMode="contain"
+                source={image}
+              />
+            );
+          })}
         </View>
-      )}
+      </View>
     </SafeAreaView>
   );
 };

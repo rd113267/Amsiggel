@@ -67,9 +67,9 @@ export const getAudioLinkText = (
       };
     case Language.FRENCH: {
       return {
-        fullText: 'télécharge Amsiggel MP3 audio – histoire intégrale',
-        firstHalfText: 'télécharge Amsiggel MP3 audio – chapitres 1-9',
-        secondHalfText: 'télécharge Amsiggel MP3 audio – chapitres 10-17',
+        fullText: 'télécharge Amsiggel MP3 – histoire intégrale',
+        firstHalfText: 'télécharge Amsiggel MP3 – chapitres 1-9',
+        secondHalfText: 'télécharge Amsiggel MP3 – chapitres 10-17',
       };
     }
     default:

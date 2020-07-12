@@ -11,20 +11,23 @@ import {
   StatusBar,
   TouchableOpacity,
   Platform,
+  Alert,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Video from 'react-native-video';
-import {getVideoDetails, getHomeVideoID} from '../helpers';
+import {getVideoDetails, getVideoIDs} from '../helpers';
 import TabProps from '../types/TabProps';
 import {ActivityIndicator} from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
 import useBackHandler from '../hooks/UseBackHandler';
 import globalStyles from '../styles/globalStyles';
 import colors from '../colors';
+import {VideoDetails} from '../types';
 
 const {width} = Dimensions.get('window');
 const {height} = Dimensions.get('screen');
+const videosLength = 17;
 
 const videoHeight = width * 0.75;
 
@@ -33,10 +36,12 @@ const Home: FunctionComponent<TabProps> = ({
   fullscreen,
   setFullscreen,
 }) => {
-  const [uri, setUri] = useState('');
   const [paused, setPaused] = useState(true);
   const [loading, setLoading] = useState(true);
+  const [videoDetails, setVideoDetails] = useState<VideoDetails>();
+  const [currentVideo, setCurrentVideo] = useState(0);
   const videoRef = useRef<Video>(null);
+  const videoPlayerRef = useRef<Video>(null);
   const handleOrientation = useCallback(
     (orientation: string) => {
       orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT'
@@ -57,18 +62,18 @@ const Home: FunctionComponent<TabProps> = ({
   }, [fullscreen]);
 
   useEffect(() => {
-    const getDetails = async () => {
-      if (language) {
-        setLoading(true);
-        const id = getHomeVideoID(language);
-        console.log(id);
-        const {thumbnailUrl, videoUrl, video} = await getVideoDetails(id);
-        setUri(videoUrl);
-        setLoading(false);
-      }
+    const getDetails = async (code: string) => {
+      setLoading(true);
+      const videosDetails = await getVideoDetails(code);
+      setVideoDetails(videosDetails);
+      setLoading(false);
     };
-    getDetails();
-  }, [language]);
+    if (language) {
+      const codes = getVideoIDs(language);
+      const code = codes[currentVideo];
+      getDetails(code);
+    }
+  }, [currentVideo, language]);
 
   useEffect(() => {
     Orientation.addOrientationListener(handleOrientation);
@@ -92,23 +97,58 @@ const Home: FunctionComponent<TabProps> = ({
     }
   });
 
-  if (fullscreen && uri) {
-    return (
-      <VideoPlayer
-        source={{uri}}
-        disableVolume
-        disableFullscreen
-        paused={paused}
-        onPause={() => setPaused(true)}
-        onPlay={() => setPaused(false)}
-        onBack={() => Orientation.lockToPortrait()}
-        onEnd={() => Orientation.lockToPortrait()}
-      />
-    );
+  const goNextVideo = () => {
+    if (Platform.OS === 'ios') {
+      setPaused(true);
+      videoRef.current?.dismissFullscreenPlayer();
+      setTimeout(() => {
+        if (currentVideo < videosLength) {
+          setCurrentVideo(currentVideo + 1);
+        } else {
+          setCurrentVideo(0);
+        }
+      }, 500);
+    } else {
+      videoPlayerRef.current?.seek(0);
+      if (currentVideo < videosLength) {
+        setCurrentVideo(currentVideo + 1);
+      } else {
+        setCurrentVideo(0);
+      }
+    }
+  };
+
+  if (fullscreen && videoDetails) {
+    if (loading) {
+      return (
+        <View style={{backgroundColor: '#000', flex: 1}}>
+          <ActivityIndicator style={{marginTop: videoHeight / 2}} />
+        </View>
+      );
+    } else {
+      return (
+        <VideoPlayer
+          source={{uri: videoDetails.videoUrl}}
+          disableVolume
+          disableFullscreen
+          paused={paused}
+          onPause={() => setPaused(true)}
+          onPlay={() => setPaused(false)}
+          onBack={() => Orientation.lockToPortrait()}
+          onEnd={goNextVideo}
+          ref={(videoPlayer: any) => {
+            if (videoPlayer) {
+              videoPlayer.current = videoPlayer.player.ref;
+            }
+          }}
+          onError={(e: Error) => Alert.alert('Error', e.message)}
+        />
+      );
+    }
   }
   return (
     <View style={{backgroundColor: '#fff', justifyContent: 'center', flex: 1}}>
-      {!loading && uri ? (
+      {!loading && videoDetails ? (
         <View>
           <TouchableOpacity
             onPress={() => {
@@ -120,15 +160,19 @@ const Home: FunctionComponent<TabProps> = ({
             }}>
             <Video
               ref={videoRef}
-              source={{uri}}
+              source={{uri: videoDetails.videoUrl}}
               paused={paused || Platform.OS === 'android'}
-              onLoad={() => videoRef.current?.seek(0)}
-              //onPlay={() => setPaused(false)}
+              onLoad={() => {
+                if (Platform.OS === 'android') {
+                  videoRef.current?.seek(0);
+                }
+              }}
               style={{height: videoHeight}}
               resizeMode="contain"
               onFullscreenPlayerDidPresent={() => setPaused(false)}
               onFullscreenPlayerDidDismiss={() => setPaused(true)}
-              //controls
+              onEnd={goNextVideo}
+              onError={(e) => Alert.alert('Error', e.error.errorString)}
             />
             <View>
               <Icon
@@ -143,52 +187,6 @@ const Home: FunctionComponent<TabProps> = ({
       ) : (
         <ActivityIndicator style={{marginTop: videoHeight / 2}} />
       )}
-
-      {/* <View style={{alignItems: 'center', marginTop: 10}}>
-        {language === Language.BERBER && (
-          <>
-            <Image source={require('../images/arraw-ad-Tifinagh-sm.png')} />
-            <Image source={require('../images/arraw-ad-Latin-sm.png')} />
-            <Image source={require('../images/arraw-ad-Arabic-sm.png')} />
-          </>
-        )}
-        {language === Language.ENGLISH && (
-          <>
-            <Text style={{fontSize: 28, marginBottom: 10}}>
-              The Quest Of Amsiggel
-            </Text>
-            <Text style={{fontSize: 15, lineHeight: 30, marginHorizontal: 10}}>
-              “A storm brought us this child, {'\n'} but he’ll outlive the
-              storm.{'\n'}
-              Born in Born in darkness, he’ll lead us into light. {'\n'}  Born
-              amidst thunder and lightning,  {'\n'} he’ll bring us peace from
-              all that beats down on us. {'\n'} We’ll call this child Amsiggel{' '}
-              {'\n'}
-               for he’ll search out hidden things. {'\n'}  He’ll discover what
-              we’ve never known  {'\n'}  and show us the Way of Peace.”
-            </Text>
-          </>
-        )}
-        {language === Language.FRENCH && (
-          <>
-            <Text style={{fontSize: 28, marginBottom: 10}}>
-              Le voyage d’Amsiggel
-            </Text>
-            <Text style={{fontStyle: 'italic', fontSize: 15, marginBottom: 10}}>
-              (Amsiggel = le chercheur)
-            </Text>
-            <Text style={{fontSize: 15, lineHeight: 30, marginHorizontal: 40, textAlign: 'center'}}>
-              Né parmi le tonnerre et la foudre, il nous apportera la paix et
-              nous délivrera de tout ce qui nous abat.{'\n'} Il découvrira ce
-              que nous avons toujours ignoré et nous montrera la Voie de la
-              Paix.» {'\n'}«Une tempête nous a apporté cet enfant, mais il
-              survivra à la tempête.{'\n'}
-              Né dans les ténèbres, il nous conduira à la lumière. {'\n'}Nous
-              l’appelerons Amsiggel, car il dénichera des choses cachées.
-            </Text>
-          </>
-        )}
-      </View> */}
     </View>
   );
 };
