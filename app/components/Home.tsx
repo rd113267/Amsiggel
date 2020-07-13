@@ -41,15 +41,7 @@ const Home: FunctionComponent<TabProps> = ({
   const [videoDetails, setVideoDetails] = useState<VideoDetails>();
   const [currentVideo, setCurrentVideo] = useState(0);
   const videoRef = useRef<Video>(null);
-  const videoPlayerRef = useRef<Video>(null);
-  const handleOrientation = useCallback(
-    (orientation: string) => {
-      orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT'
-        ? setFullscreen(true)
-        : setFullscreen(false);
-    },
-    [setFullscreen],
-  );
+
 
   useEffect(() => {
     if (fullscreen) {
@@ -76,14 +68,6 @@ const Home: FunctionComponent<TabProps> = ({
   }, [currentVideo, language]);
 
   useEffect(() => {
-    Orientation.addOrientationListener(handleOrientation);
-
-    return () => {
-      Orientation.removeOrientationListener(handleOrientation);
-    };
-  }, [handleOrientation]);
-
-  useEffect(() => {
     if (Platform.OS === 'android' && !Orientation.isLocked()) {
       Orientation.lockToPortrait();
     }
@@ -101,15 +85,16 @@ const Home: FunctionComponent<TabProps> = ({
     if (Platform.OS === 'ios') {
       setPaused(true);
       videoRef.current?.dismissFullscreenPlayer();
+      if (currentVideo < videosLength) {
+        setCurrentVideo(currentVideo + 1);
+      } else {
+        setCurrentVideo(0);
+      }
       setTimeout(() => {
-        if (currentVideo < videosLength) {
-          setCurrentVideo(currentVideo + 1);
-        } else {
-          setCurrentVideo(0);
-        }
+        setPaused(false);
+        videoRef.current?.presentFullscreenPlayer();
       }, 500);
     } else {
-      videoPlayerRef.current?.seek(0);
       if (currentVideo < videosLength) {
         setCurrentVideo(currentVideo + 1);
       } else {
@@ -136,11 +121,6 @@ const Home: FunctionComponent<TabProps> = ({
           onPlay={() => setPaused(false)}
           onBack={() => Orientation.lockToPortrait()}
           onEnd={goNextVideo}
-          ref={(videoPlayer: any) => {
-            if (videoPlayer) {
-              videoPlayer.current = videoPlayer.player.ref;
-            }
-          }}
           onError={(e: Error) => Alert.alert('Error', e.message)}
         />
       );

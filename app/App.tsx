@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -12,6 +12,8 @@ import colors from './colors';
 import {Image} from 'react-native';
 import useLanguage from './hooks/UseLanguage';
 import FlagBanner from './components/commons/FlagBanner';
+import Orientation from 'react-native-orientation-locker';
+import { VideoDetails } from './types';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,6 +30,23 @@ const theme = {
 const App = () => {
   const {language, setNewLanguage} = useLanguage();
   const [fullscreen, setFullscreen] = useState(false);
+  const [video, setVideo] = useState<VideoDetails>();
+  const handleOrientation = useCallback(
+    (orientation: string) => {
+      orientation === 'LANDSCAPE-LEFT' || orientation === 'LANDSCAPE-RIGHT'
+        ? setFullscreen(true)
+        : setFullscreen(false);
+    },
+    [setFullscreen],
+  );
+  useEffect(() => {
+    Orientation.addOrientationListener(handleOrientation);
+
+    return () => {
+      Orientation.removeOrientationListener(handleOrientation);
+    };
+  }, [handleOrientation]);
+
   const Tabs = () => {
     return (
       <Tab.Navigator
@@ -103,9 +122,12 @@ const App = () => {
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
+              video={video}
+              setVideo={setVideo}
             />
           )}
           options={(route) => ({
+            tabBarVisible: !fullscreen,
             tabBarIcon: ({focused, color, size}) => (
               <Image
                 style={{tintColor: color, height: size, width: size}}
