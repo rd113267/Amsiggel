@@ -62,8 +62,8 @@ export const getAudioLinkText = (
     case Language.ENGLISH:
       return {
         fullText: 'Amsiggel English.mp3	 ',
-        firstHalfText: 'Amsiggel English 1-9.mp3',
-        secondHalfText: 'Amsiggel English 10-17.mp3',
+        firstHalfText: 'Amsiggel English 1-9 mp3',
+        secondHalfText: 'Amsiggel English 10-17 mp3',
       };
     case Language.FRENCH: {
       return {
@@ -74,9 +74,9 @@ export const getAudioLinkText = (
     }
     default:
       return {
-        fullText: 'Amsiggel lqist kullutt.mp3',
-        firstHalfText: 'Amsiggel agzzum 1-9.mp3',
-        secondHalfText: 'Amsiggel agzzum 10-17.mp3',
+        fullText: 'Amsiggel lqist kullutt mp3',
+        firstHalfText: 'Amsiggel agzzum 1-9 mp3',
+        secondHalfText: 'Amsiggel agzzum 10-17 mp3',
       };
   }
 };
@@ -104,5 +104,5 @@ export const downloadLink = (link: string) => {
     });
   } else {
     Linking.openURL(link);
-  }
+ }
 };

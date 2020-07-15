@@ -1,92 +1,55 @@
 import React, {FunctionComponent, useState} from 'react';
-import {View, Text, SafeAreaView, Alert} from 'react-native';
+import {SafeAreaView, Linking, Platform, Alert} from 'react-native';
 import TabProps from '../types/TabProps';
-import FlagBanner from './commons/FlagBanner';
-import {TextInput, Button} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {Language} from '../types';
 
 const Contact: FunctionComponent<TabProps> = ({language}) => {
-  const getNameLabel = () => {
+  const [loading, setLoading] = useState(false);
+  const PHONE_NUMBER = '+212642596841';
+  const getWhatsAppLabel = () => {
     if (language === Language.BERBER) {
-      return 'ism-nnek';
+      return 'sawl-agh-d s-watsapp';
     }
     if (language === Language.FRENCH) {
-      return 'Nom';
+      return 'Contactez-nous via WhatsApp';
     }
-    return 'Name';
+    return 'Contact us via WhatsApp';
   };
-  const getTelephoneLabel = () => {
-    if (language === Language.BERBER) {
-      return 'tilifun-nnek';
+  const openWhatsApp = async () => {
+    setLoading(true);
+    try {
+      await Linking.openURL(`whatsapp://send?phone=${PHONE_NUMBER}`);
+      setLoading(false);
+    } catch (e) {
+      try {
+        if (Platform.OS === 'ios') {
+          await Linking.openURL(
+            'itms-apps://apps.apple.com/gb/app/whatsapp-messenger/id310633997',
+          );
+        } else {
+          await Linking.openURL(
+            'https://play.google.com/store/apps/details?id=com.whatsapp',
+          );
+        }
+        setLoading(false);
+      } catch (error) {
+        Alert.alert('Error', error.message);
+        setLoading(false);
+      }
     }
-    if (language === Language.FRENCH) {
-      return 'Téléphone';
-    }
-    return 'Telephone';
   };
-  const getEmailLabel = () => {
-    if (language === Language.BERBER) {
-      return 'email-nnek';
-    }
-    return 'E-Mail';
-  };
-  const getMessageLabel = () => {
-    if (language === Language.BERBER) {
-      return 'awal-nnek';
-    }
-    return 'Message';
-  };
-
-  const getSendLabel = () => {
-    if (language === Language.BERBER) {
-      return 'azn awal';
-    }
-    if (language === Language.FRENCH) {
-      return 'Soumettre';
-    }
-    return 'Send';
-  };
-  const [name, setName] = useState('');
-  const [telephone, setTelephone] = useState('');
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
   return (
-    <SafeAreaView style={{margin: 20}}>
-      <TextInput
-        label={getNameLabel()}
-        value={name}
-        onChangeText={setName}
-        mode="outlined"
-        style={{marginBottom: 10}}
-      />
-      <TextInput
-        label={getTelephoneLabel()}
-        value={telephone}
-        onChangeText={setTelephone}
-        mode="outlined"
-        style={{marginBottom: 10}}
-        keyboardType="numeric"
-      />
-      <TextInput
-        label={getEmailLabel()}
-        value={email}
-        onChangeText={setEmail}
-        mode="outlined"
-        keyboardType="email-address"
-        style={{marginBottom: 10}}
-      />
-      <TextInput
-        label={getMessageLabel()}
-        value={message}
-        onChangeText={setMessage}
-        mode="outlined"
-        multiline
-        numberOfLines={10}
-        style={{marginBottom: 20}}
-      />
-      <Button onPress={() => Alert.alert('coming soon')} mode="contained">
-        {getSendLabel()}
+    <SafeAreaView style={{flex: 1, justifyContent: 'center', margin: 20}}>
+      <Button
+        uppercase={false}
+        loading={loading}
+        icon="whatsapp"
+        onPress={openWhatsApp}
+        mode="contained">
+        {getWhatsAppLabel()}
       </Button>
+      
     </SafeAreaView>
   );
 };

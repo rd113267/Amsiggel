@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator, Header} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
@@ -13,10 +13,21 @@ import {Image} from 'react-native';
 import useLanguage from './hooks/UseLanguage';
 import FlagBanner from './components/commons/FlagBanner';
 import Orientation from 'react-native-orientation-locker';
-import { VideoDetails } from './types';
+import {VideoDetails, Language} from './types';
+import Legal from './components/Legal';
 
-const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+export type RootStackParamList = {
+  Tabs: undefined;
+  Legal: undefined;
+  Home: undefined;
+  Audio: undefined;
+  Story: undefined;
+  Video: undefined;
+  Contact: undefined;
+};
+
+const Stack = createStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 const theme = {
   ...DefaultTheme,
@@ -59,11 +70,12 @@ const App = () => {
         <Tab.Screen
           name="Home"
           key="Home"
-          children={() => (
+          children={({navigation}) => (
             <Home
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
+              navigation={navigation}
             />
           )}
           options={(route) => ({
@@ -79,11 +91,12 @@ const App = () => {
         <Tab.Screen
           name="Audio"
           key="Audio"
-          children={() => (
+          children={({navigation}) => (
             <Audio
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
+              navigation={navigation}
             />
           )}
           options={(route) => ({
@@ -98,11 +111,12 @@ const App = () => {
         <Tab.Screen
           name="Story"
           key="Story"
-          children={() => (
+          children={({navigation}) => (
             <Story
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
+              navigation={navigation}
             />
           )}
           options={(route) => ({
@@ -117,13 +131,14 @@ const App = () => {
         <Tab.Screen
           name="Video"
           key="Video"
-          children={() => (
+          children={({navigation}) => (
             <Video
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
               video={video}
               setVideo={setVideo}
+              navigation={navigation}
             />
           )}
           options={(route) => ({
@@ -139,11 +154,12 @@ const App = () => {
         <Tab.Screen
           name="Contact"
           key="Contact"
-          children={() => (
+          children={({navigation}) => (
             <Contact
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
+              navigation={navigation}
             />
           )}
           options={(route) => ({
@@ -179,6 +195,18 @@ const App = () => {
                 // return <Header {...props} />;
                 return null;
               },
+            })}
+          />
+          <Stack.Screen
+            name="Legal"
+            key="Legal"
+            children={() => <Legal language={language} />}
+            options={() => ({
+              headerTitle:
+                language && language === Language.ENGLISH
+                  ? 'Legal'
+                  : 'Mentions légales',
+              headerBackTitleStyle: {display: 'none'},
             })}
           />
         </Stack.Navigator>
