@@ -57,7 +57,8 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
   return (
     <SafeAreaView
       style={{flex: 1, justifyContent: 'center', backgroundColor: '#fff'}}>
-      <View style={{margin: 20}}>
+      <ScrollView
+        contentContainerStyle={{flexGrow: 1, justifyContent: 'center', padding: 20}}>
         <TouchableOpacity onPress={openAwalIwass}>
           <Image
             source={require('../images/logo.png')}
@@ -85,7 +86,9 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
         </View>
         {language === Language.BERBER && (
           <>
-            <Headline style={{alignSelf: 'center', marginBottom: 10}}>Amsiggel d Bubker</Headline>
+            <Headline style={{alignSelf: 'center', marginBottom: 10}}>
+              Amsiggel d Bubker
+            </Headline>
             {berberPDFs.map((link, index) => {
               return (
                 <TouchableOpacity
@@ -200,7 +203,7 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             ? 'Legal'
             : 'Mentions légales'}
         </Button>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
