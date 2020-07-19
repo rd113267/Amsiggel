@@ -1,12 +1,12 @@
 import React, {FunctionComponent, useState} from 'react';
-import {Text, View, Image, SafeAreaView} from 'react-native';
+import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
 import TabProps from '../types/TabProps';
 import {Language} from '../types';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {downloadLink} from '../helpers';
-import {Button} from 'react-native-paper';
+import {Button, Headline} from 'react-native-paper';
 
 const image1 = require('../images/audio9.jpg');
 const image2 = require('../images/audio10.jpg');
@@ -30,9 +30,33 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
   const englishLink = `${baseURL}2014/05/Amsiggel-English-translation.pdf`;
   const frenchLink = `${baseURL}2016/01/Amsiggel-French.pdf`;
 
+  const englishPDF = `${baseURL}2014/07/Bubker%20traduction%20anglaise.pdf`;
+
+  const berberPDFs = [
+    `${baseURL}2014/06/Bubker-Tifinagh-transcription.pdf`,
+    `${baseURL}2014/07/Bubker%20caracteres%20latins.pdf`,
+    `${baseURL}2014/06/Bubker-Arabic-transcription.pdf`,
+  ];
+
+  const frenchPDF =
+    'https://www.amsiggel.com/wp-content/uploads/2016/01/Conversation-avec-Bubker.pdf';
+
+  const getTitleText = () => {
+    if (language === Language.ENGLISH) {
+      return 'Amsiggel and Bubker';
+    }
+    if (language === Language.FRENCH) {
+      return 'Amsiggel et Bubker';
+    }
+    return 'Amsiggel d Bubker';
+  };
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
-      <View>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+        }}>
         <View style={{flexDirection: 'row'}}>
           {firstRowImages.map((image) => {
             return (
@@ -54,8 +78,8 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                   onPress={() => downloadLink(link)}
                   style={{
                     backgroundColor: colors.primary,
-                    margin: 20,
-                    marginBottom: 10,
+                    marginHorizontal: 40,
+                    marginBottom: 20,
                     borderRadius: 5,
                     padding: 5,
                   }}>
@@ -69,11 +93,11 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       <Icon
                         name="download"
                         color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 5}}
+                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
                       />
                       <Image
                         source={require('../images/tifinagh.png')}
-                        style={{width: 70, height: 30}}
+                        style={{width: 50, height: 20}}
                         resizeMode="contain"
                       />
                     </View>
@@ -88,9 +112,9 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       <Icon
                         name="download"
                         color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 5}}
+                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
                       />
-                      <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
+                      <Text style={{color: '#fff', fontSize: 15}}>Latin</Text>
                     </View>
                   )}
                   {index === 2 && (
@@ -103,11 +127,11 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       <Icon
                         name="download"
                         color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 5}}
+                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
                       />
                       <Image
                         source={require('../images/arabic.png')}
-                        style={{width: 70, height: 30}}
+                        style={{width: 50, height: 20}}
                         resizeMode="contain"
                       />
                     </View>
@@ -124,7 +148,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             onPress={() => downloadLink(englishLink)}
             uppercase={false}
             style={{margin: 10}}>
-            Amsiggel English
+            The Quest of Amsiggel (text)
           </Button>
         )}
         {language === Language.FRENCH && (
@@ -134,7 +158,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             onPress={() => downloadLink(frenchLink)}
             uppercase={false}
             style={{margin: 10}}>
-            Amsiggel Français
+            Le Voyage d'Amsiggel (texte)
           </Button>
         )}
         <View style={{flexDirection: 'row'}}>
@@ -149,7 +173,101 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             );
           })}
         </View>
-      </View>
+        <Headline style={{alignSelf: 'center', marginBottom: 10}}>
+          {getTitleText()}
+        </Headline>
+        {language === Language.BERBER && (
+          <>
+            {berberPDFs.map((link, index) => {
+              return (
+                <TouchableOpacity
+                  key={link}
+                  onPress={() => downloadLink(link)}
+                  style={{
+                    backgroundColor: colors.primary,
+                    marginHorizontal: 40,
+                    borderRadius: 5,
+                    padding: 5,
+                    marginBottom: 20,
+                  }}>
+                  {index === 0 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="download"
+                        color="#fff"
+                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                      />
+                      <Image
+                        source={require('../images/tifinagh.png')}
+                        style={{width: 50, height: 20}}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  )}
+                  {index === 1 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="download"
+                        color="#fff"
+                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                      />
+                      <Text style={{color: '#fff', fontSize: 15}}>Latin</Text>
+                    </View>
+                  )}
+                  {index === 2 && (
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                      }}>
+                      <Icon
+                        name="download"
+                        color="#fff"
+                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                      />
+                      <Image
+                        source={require('../images/arabic.png')}
+                        style={{width: 50, height: 20}}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  )}
+                </TouchableOpacity>
+              );
+            })}
+          </>
+        )}
+        {language === Language.ENGLISH && (
+          <>
+            <Button
+              icon="download"
+              mode="contained"
+              onPress={() => downloadLink(englishPDF)}
+              style={{margin: 20}}
+              uppercase={false}>
+              Amsiggel and Bubker (text)
+            </Button>
+          </>
+        )}
+        {language === Language.FRENCH && (
+          <Button
+            icon="download"
+            mode="contained"
+            onPress={() => downloadLink(frenchPDF)}
+            style={{margin: 20}}
+            uppercase={false}>
+            Conversation avec Bubker (texte)
+          </Button>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
