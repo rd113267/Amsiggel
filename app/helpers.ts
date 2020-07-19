@@ -61,13 +61,13 @@ export const getAudioLinkText = (
   switch (language) {
     case Language.ENGLISH:
       return {
-        fullText: 'Amsiggel English.mp3	 ',
+        fullText: 'The Quest of Amsiggel (audio)',
         firstHalfText: 'Amsiggel English 1-9 mp3',
         secondHalfText: 'Amsiggel English 10-17 mp3',
       };
     case Language.FRENCH: {
       return {
-        fullText: 'télécharge Amsiggel MP3 – histoire intégrale',
+        fullText: "Le Voyage d'Amsiggel (audio)",
         firstHalfText: 'télécharge Amsiggel MP3 – chapitres 1-9',
         secondHalfText: 'télécharge Amsiggel MP3 – chapitres 10-17',
       };
