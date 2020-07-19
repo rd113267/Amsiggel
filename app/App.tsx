@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
@@ -183,16 +183,26 @@ const App = () => {
             component={Tabs}
             options={({route}) => ({
               headerShown: !fullscreen,
-              headerTitle: '',
+              headerTitle:
+                //@ts-ignore
+                route.state && route.state.index === 2
+                  ? 'Amuddu n-Umsiggel'
+                  : '',
               headerStyle: {
                 backgroundColor: colors.primary,
+              },
+              headerTitleStyle: {
+                color: '#fff',
               },
               header: (props) => {
                 //@ts-ignore
                 if (!route.state || route.state.index === 0) {
                   return <FlagBanner setNewLanguage={setNewLanguage} />;
                 }
-                // return <Header {...props} />;
+                //@ts-ignore
+                if (route.state && route.state.index === 2) {
+                  return <Header {...props} />;
+                }
                 return null;
               },
             })}
