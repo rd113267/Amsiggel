@@ -1,9 +1,10 @@
 import React, {FunctionComponent} from 'react';
-import {View, Image} from 'react-native';
+import {View, Image, SafeAreaView} from 'react-native';
 import TabProps from '../types/TabProps';
 import {getAudioLinks, getAudioLinkText, downloadLink} from '../helpers';
-import {Button} from 'react-native-paper';
+import {Button, Headline, Title} from 'react-native-paper';
 import styles from '../styles/components/Audio';
+import {Language} from '../types';
 
 const image1 = require('../images/audio1.jpg');
 const image2 = require('../images/audio2.jpg');
@@ -23,43 +24,83 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
   const {fullText, firstHalfText, secondHalfText} = getAudioLinkText(language);
 
   return (
-    <View style={{flex: 1, justifyContent: 'center'}}>
-      <View style={{flexDirection: 'row'}}>
-        {firstRowImages.map((image) => {
-          return (
-            <Image
-              key={image}
-              style={{flex: 1}}
-              resizeMode="contain"
-              source={image}
-            />
-          );
-        })}
-      </View>
-      <Button
-        style={styles.button}
-        icon="download"
-        mode="contained"
-        uppercase={false}
-        onPress={() => {
-          const link = `${url}${full}`;
-          downloadLink(link);
+    <SafeAreaView style={{flex: 1}}>
+      <Title
+        style={{
+          textAlign: 'center',
+          fontSize: 30,
+          marginTop: 20,
         }}>
-        {fullText}
-      </Button>
-      <View style={{flexDirection: 'row'}}>
-        {secondRowImages.map((image) => {
-          return (
-            <Image
-              key={image}
-              style={{flex: 1}}
-              resizeMode="contain"
-              source={image}
-            />
-          );
-        })}
+        Audio
+      </Title>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <View style={{flexDirection: 'row'}}>
+          {firstRowImages.map((image) => {
+            return (
+              <Image
+                key={image}
+                style={{flex: 1}}
+                resizeMode="contain"
+                source={image}
+              />
+            );
+          })}
+        </View>
+        <Button
+          style={styles.button}
+          icon="download"
+          mode="contained"
+          uppercase={false}
+          onPress={() => {
+            const link = `${url}${full}`;
+            downloadLink(link);
+          }}>
+          {fullText}
+        </Button>
+        <View style={{flexDirection: 'row'}}>
+          {secondRowImages.map((image) => {
+            return (
+              <Image
+                key={image}
+                style={{flex: 1}}
+                resizeMode="contain"
+                source={image}
+              />
+            );
+          })}
+        </View>
+        {language === Language.ENGLISH && (
+          <>
+            <Title style={{alignSelf: 'center', marginBottom: 10}}>
+              Amsiggel and Bubker
+            </Title>
+            <Button
+              icon="download"
+              mode="contained"
+              onPress={() => downloadLink(`${url}646`)}
+              uppercase={false}
+              style={{margin: 10}}>
+              Amsiggel and Bubker (audio)
+            </Button>
+          </>
+        )}
+        {language === Language.BERBER && (
+          <>
+            <Title style={{alignSelf: 'center', marginBottom: 10}}>
+              Amsiggel d-Bubker
+            </Title>
+            <Button
+              icon="download"
+              mode="contained"
+              onPress={() => downloadLink(`${url}632`)}
+              uppercase={false}
+              style={{margin: 10}}>
+              Amsiggel d-Bubker (audio)
+            </Button>
+          </>
+        )}
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

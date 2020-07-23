@@ -2,6 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
 import Audio from './components/Audio';
@@ -164,10 +165,7 @@ const App = () => {
           )}
           options={(route) => ({
             tabBarIcon: ({focused, color, size}) => (
-              <Image
-                style={{tintColor: color, height: size, width: size}}
-                source={require('./images/mail.png')}
-              />
+              <Icon name="whatsapp" size={size} color={color} />
             ),
           })}
         />
@@ -183,11 +181,7 @@ const App = () => {
             component={Tabs}
             options={({route}) => ({
               headerShown: !fullscreen,
-              headerTitle:
-                //@ts-ignore
-                route.state && route.state.index === 2
-                  ? 'Amuddu n-Umsiggel'
-                  : '',
+              headerTitle: '',
               headerStyle: {
                 backgroundColor: colors.primary,
               },
@@ -198,10 +192,6 @@ const App = () => {
                 //@ts-ignore
                 if (!route.state || route.state.index === 0) {
                   return <FlagBanner setNewLanguage={setNewLanguage} />;
-                }
-                //@ts-ignore
-                if (route.state && route.state.index === 2) {
-                  return <Header {...props} />;
                 }
                 return null;
               },

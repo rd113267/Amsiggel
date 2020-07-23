@@ -6,7 +6,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {downloadLink} from '../helpers';
-import {Button, Headline} from 'react-native-paper';
+import {Button, Title} from 'react-native-paper';
 
 const image1 = require('../images/audio9.jpg');
 const image2 = require('../images/audio10.jpg');
@@ -41,6 +41,16 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
   const frenchPDF =
     'https://www.amsiggel.com/wp-content/uploads/2016/01/Conversation-avec-Bubker.pdf';
 
+  const getTitle = () => {
+    if (language === Language.ENGLISH) {
+      return 'Texts';
+    }
+    if (language === Language.FRENCH) {
+      return 'Textes';
+    }
+    return 'arratn ';
+  }
+
   const getTitleText = () => {
     if (language === Language.ENGLISH) {
       return 'Amsiggel and Bubker';
@@ -48,10 +58,18 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
     if (language === Language.FRENCH) {
       return 'Amsiggel et Bubker';
     }
-    return 'Amsiggel d Bubker';
+    return 'Amsiggel d-Bubker';
   };
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
+      <Title
+        style={{
+          textAlign: 'center',
+          fontSize: 30,
+          marginTop: 20,
+        }}>
+        {getTitle()}
+      </Title>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
@@ -173,9 +191,9 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             );
           })}
         </View>
-        <Headline style={{alignSelf: 'center', marginBottom: 10}}>
+        <Title style={{alignSelf: 'center', marginBottom: 10}}>
           {getTitleText()}
-        </Headline>
+        </Title>
         {language === Language.BERBER && (
           <>
             {berberPDFs.map((link, index) => {

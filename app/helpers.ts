@@ -74,7 +74,7 @@ export const getAudioLinkText = (
     }
     default:
       return {
-        fullText: 'Amsiggel lqist kullutt mp3',
+        fullText: 'Amuddu n-Umsiggel (audio)',
         firstHalfText: 'Amsiggel agzzum 1-9 mp3',
         secondHalfText: 'Amsiggel agzzum 10-17 mp3',
       };

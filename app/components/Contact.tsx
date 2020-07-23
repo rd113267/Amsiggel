@@ -47,7 +47,7 @@ const Contact: FunctionComponent<TabProps> = ({language}) => {
         icon="whatsapp"
         onPress={openWhatsApp}
         mode="contained">
-        {getWhatsAppLabel()}
+        sawl-agh-d s-watsapp
       </Button>
       
     </SafeAreaView>
