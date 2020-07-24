@@ -145,10 +145,7 @@ const App = () => {
           options={(route) => ({
             tabBarVisible: !fullscreen,
             tabBarIcon: ({focused, color, size}) => (
-              <Image
-                style={{tintColor: color, height: size, width: size}}
-                source={require('./images/video.png')}
-              />
+              <Icon name="link" size={size} color={color} />
             ),
           })}
         />
