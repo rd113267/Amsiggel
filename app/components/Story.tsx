@@ -49,39 +49,31 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
       return 'Textes';
     }
     return 'arratn ';
-  }
-
-  const getTitleText = () => {
-    if (language === Language.ENGLISH) {
-      return 'Amsiggel and Bubker';
-    }
-    if (language === Language.FRENCH) {
-      return 'Amsiggel et Bubker';
-    }
-    return 'Amsiggel d-Bubker';
   };
+
   return (
     <SafeAreaView style={{flex: 1, justifyContent: 'center'}}>
       <Title
         style={{
           textAlign: 'center',
           fontSize: 30,
-          marginTop: 20,
+          marginTop: 10,
         }}>
         {getTitle()}
       </Title>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: 'center',
+          justifyContent: language === Language.BERBER ? 'flex-start' : 'center',
         }}>
         <View style={{flexDirection: 'row'}}>
           {firstRowImages.map((image) => {
             return (
               <Image
                 key={image}
-                style={{flex: 1}}
+                style={{flex: 1, marginVertical: -15}}
                 resizeMode="contain"
+                resizeMethod="resize"
                 source={image}
               />
             );
@@ -89,6 +81,9 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
         </View>
         {language === Language.BERBER && (
           <>
+            <Title style={{alignSelf: 'center', marginBottom: 10}}>
+              Amuddu n-Umsiggel
+            </Title>
             {berberLinks.map((link, index) => {
               return (
                 <TouchableOpacity
@@ -97,7 +92,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                   style={{
                     backgroundColor: colors.primary,
                     marginHorizontal: 40,
-                    marginBottom: 20,
+                    marginBottom: index === 2 ? 0 : 15,
                     borderRadius: 5,
                     padding: 5,
                   }}>
@@ -115,7 +110,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       />
                       <Image
                         source={require('../images/tifinagh.png')}
-                        style={{width: 50, height: 20}}
+                        style={{width: 70, height: 25}}
                         resizeMode="contain"
                       />
                     </View>
@@ -132,7 +127,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         color="#fff"
                         style={{fontSize: 18, marginRight: 10, marginTop: 2}}
                       />
-                      <Text style={{color: '#fff', fontSize: 15}}>Latin</Text>
+                      <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
                     </View>
                   )}
                   {index === 2 && (
@@ -149,7 +144,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       />
                       <Image
                         source={require('../images/arabic.png')}
-                        style={{width: 50, height: 20}}
+                        style={{width: 70, height: 25}}
                         resizeMode="contain"
                       />
                     </View>
@@ -165,6 +160,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             mode="contained"
             onPress={() => downloadLink(englishLink)}
             uppercase={false}
+            labelStyle={{ fontSize: 20 }}
             style={{margin: 10}}>
             The Quest of Amsiggel (text)
           </Button>
@@ -175,6 +171,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             mode="contained"
             onPress={() => downloadLink(frenchLink)}
             uppercase={false}
+            labelStyle={{ fontSize: 20 }}
             style={{margin: 10}}>
             Le Voyage d'Amsiggel (texte)
           </Button>
@@ -184,18 +181,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             return (
               <Image
                 key={image}
-                style={{flex: 1}}
+                style={{flex: 1, marginVertical: -15}}
                 resizeMode="contain"
                 source={image}
               />
             );
           })}
         </View>
-        <Title style={{alignSelf: 'center', marginBottom: 10}}>
-          {getTitleText()}
-        </Title>
+
         {language === Language.BERBER && (
           <>
+            <Title style={{alignSelf: 'center', marginBottom: 10}}>
+              Amsiggel d-Bubker
+            </Title>
             {berberPDFs.map((link, index) => {
               return (
                 <TouchableOpacity
@@ -206,7 +204,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                     marginHorizontal: 40,
                     borderRadius: 5,
                     padding: 5,
-                    marginBottom: 20,
+                    marginBottom: index === 2 ? 0 : 15,
                   }}>
                   {index === 0 && (
                     <View
@@ -221,7 +219,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       />
                       <Image
                         source={require('../images/tifinagh.png')}
-                        style={{width: 50, height: 20}}
+                        style={{width: 70, height: 25}}
                         resizeMode="contain"
                       />
                     </View>
@@ -237,7 +235,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         color="#fff"
                         style={{fontSize: 18, marginRight: 10, marginTop: 2}}
                       />
-                      <Text style={{color: '#fff', fontSize: 15}}>Latin</Text>
+                      <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
                     </View>
                   )}
                   {index === 2 && (
@@ -253,7 +251,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                       />
                       <Image
                         source={require('../images/arabic.png')}
-                        style={{width: 50, height: 20}}
+                        style={{width: 70, height: 25}}
                         resizeMode="contain"
                       />
                     </View>
@@ -270,6 +268,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
               mode="contained"
               onPress={() => downloadLink(englishPDF)}
               style={{margin: 20}}
+              labelStyle={{ fontSize: 20 }}
               uppercase={false}>
               Amsiggel and Bubker (text)
             </Button>
@@ -281,6 +280,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             mode="contained"
             onPress={() => downloadLink(frenchPDF)}
             style={{margin: 20}}
+            labelStyle={{ fontSize: 20 }}
             uppercase={false}>
             Conversation avec Bubker (texte)
           </Button>

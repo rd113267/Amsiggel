@@ -45,6 +45,7 @@ const Contact: FunctionComponent<TabProps> = ({language}) => {
         uppercase={false}
         loading={loading}
         icon="whatsapp"
+        labelStyle={{ fontSize: 20 }}
         onPress={openWhatsApp}
         mode="contained">
         sawl-agh-d s-watsapp

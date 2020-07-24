@@ -31,7 +31,7 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
           fontSize: 30,
           marginTop: 20,
         }}>
-        Audio
+        audio
       </Title>
       <View style={{flex: 1, justifyContent: 'center'}}>
         <View style={{flexDirection: 'row'}}>
@@ -48,6 +48,7 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
         </View>
         <Button
           style={styles.button}
+          labelStyle={{ fontSize: 20 }}
           icon="download"
           mode="contained"
           uppercase={false}
@@ -70,34 +71,26 @@ const Audio: FunctionComponent<TabProps> = ({language}) => {
           })}
         </View>
         {language === Language.ENGLISH && (
-          <>
-            <Title style={{alignSelf: 'center', marginBottom: 10}}>
-              Amsiggel and Bubker
-            </Title>
-            <Button
-              icon="download"
-              mode="contained"
-              onPress={() => downloadLink(`${url}646`)}
-              uppercase={false}
-              style={{margin: 10}}>
-              Amsiggel and Bubker (audio)
-            </Button>
-          </>
+          <Button
+            icon="download"
+            mode="contained"
+            onPress={() => downloadLink(`${url}646`)}
+            uppercase={false}
+            labelStyle={{ fontSize: 20 }}
+            style={{margin: 10}}>
+            Amsiggel and Bubker (audio)
+          </Button>
         )}
         {language === Language.BERBER && (
-          <>
-            <Title style={{alignSelf: 'center', marginBottom: 10}}>
-              Amsiggel d-Bubker
-            </Title>
-            <Button
-              icon="download"
-              mode="contained"
-              onPress={() => downloadLink(`${url}632`)}
-              uppercase={false}
-              style={{margin: 10}}>
-              Amsiggel d-Bubker (audio)
-            </Button>
-          </>
+          <Button
+            icon="download"
+            mode="contained"
+            onPress={() => downloadLink(`${url}632`)}
+            uppercase={false}
+            labelStyle={{ fontSize: 20 }}
+            style={{margin: 10}}>
+            Amsiggel d-Bubker (audio)
+          </Button>
         )}
       </View>
     </SafeAreaView>
