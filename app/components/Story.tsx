@@ -6,7 +6,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {downloadLink} from '../helpers';
-import {Button, Title} from 'react-native-paper';
+import {Button, Title, ActivityIndicator} from 'react-native-paper';
 
 const image1 = require('../images/audio9.jpg');
 const image2 = require('../images/audio10.jpg');
@@ -21,6 +21,23 @@ const firstRowImages = [image1, image2, image3, image4];
 const secondRowImages = [image5, image6, image7, image8];
 
 const Story: FunctionComponent<TabProps> = ({language}) => {
+  const [downloading, setDownloading] = useState(false);
+  const [downloadingSecondary, setDownloadingSecondary] = useState(false);
+
+  const [downloadingTifinagh, setDownloadingTifinagh] = useState(false);
+  const [downloadingLatin, setDownloadingLatin] = useState(false);
+  const [downloadingArabic, setDownloadingArabic] = useState(false);
+  const [downloadingLatinSecondary, setDownloadingLatinSecondary] = useState(
+    false,
+  );
+  const [
+    downloadingTifinaghSecondary,
+    setDownloadingTifinaghSecondary,
+  ] = useState(false);
+  const [downloadingArabicSecondary, setDownloadingArabicSecondary] = useState(
+    false,
+  );
+
   const baseURL = 'https://www.amsiggel.com/wp-content/uploads/dlm_uploads/';
   const berberLinks = [
     `${baseURL}2014/05/Amsiggel-Tifinagh-transcription.pdf`,
@@ -37,18 +54,81 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
     `${baseURL}2014/07/Bubker%20caracteres%20latins.pdf`,
     `${baseURL}2014/06/Bubker-Arabic-transcription.pdf`,
   ];
-
   const frenchPDF =
     'https://www.amsiggel.com/wp-content/uploads/2016/01/Conversation-avec-Bubker.pdf';
 
   const getTitle = () => {
     if (language === Language.ENGLISH) {
-      return 'Texts';
+      return 'texts';
     }
     if (language === Language.FRENCH) {
-      return 'Textes';
+      return 'textes';
     }
     return 'arratn ';
+  };
+
+  const downloadBerberPrimary = async (link: string, index: number) => {
+    switch (index) {
+      case 0:
+        setDownloadingTifinagh(true);
+        break;
+      case 1:
+        setDownloadingLatin(true);
+        break;
+      default:
+        setDownloadingArabic(true);
+    }
+    await downloadLink(link, 'Amuddu n-Umsiggel', true);
+    switch (index) {
+      case 0:
+        setDownloadingTifinagh(false);
+        break;
+      case 1:
+        setDownloadingLatin(false);
+        break;
+      default:
+        setDownloadingArabic(false);
+    }
+  };
+
+  const downloadBerberSecondary = async (link: string, index: number) => {
+    switch (index) {
+      case 0:
+        setDownloadingTifinaghSecondary(true);
+        break;
+      case 1:
+        setDownloadingLatinSecondary(true);
+        break;
+      default:
+        setDownloadingArabicSecondary(true);
+    }
+    await downloadLink(link, 'Amuddu n-Umsiggel', true);
+    switch (index) {
+      case 0:
+        setDownloadingTifinaghSecondary(false);
+        break;
+      case 1:
+        setDownloadingLatinSecondary(false);
+        break;
+      default:
+        setDownloadingArabicSecondary(false);
+    }
+  };
+
+  const primaryDisabled = (index: number) => {
+    return (
+      (index === 0 && downloadingTifinagh) ||
+      (index === 1 && downloadingLatin) ||
+      (index === 2 && downloadingArabic)
+    );
+  };
+
+  const secondaryDisabled = (index: number) => {
+    return (
+      (index === 0 && downloadingTifinaghSecondary) ||
+      (index === 1 && downloadingLatinSecondary) ||
+      (index === 2 && downloadingArabicSecondary)
+    );
   };
 
   return (
@@ -64,7 +144,8 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: language === Language.BERBER ? 'flex-start' : 'center',
+          justifyContent:
+            language === Language.BERBER ? 'flex-start' : 'center',
         }}>
         <View style={{flexDirection: 'row'}}>
           {firstRowImages.map((image) => {
@@ -88,7 +169,8 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
               return (
                 <TouchableOpacity
                   key={link}
-                  onPress={() => downloadLink(link)}
+                  onPress={() => downloadBerberPrimary(link, index)}
+                  disabled={primaryDisabled(index)}
                   style={{
                     backgroundColor: colors.primary,
                     marginHorizontal: 40,
@@ -103,11 +185,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Icon
-                        name="download"
-                        color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
-                      />
+                      {downloadingTifinagh ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          size={18}
+                          style={{marginRight: 10}}
+                        />
+                      ) : (
+                        <Icon
+                          name="download"
+                          color="#fff"
+                          style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                        />
+                      )}
                       <Image
                         source={require('../images/tifinagh.png')}
                         style={{width: 70, height: 25}}
@@ -122,11 +212,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Icon
-                        name="download"
-                        color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
-                      />
+                      {downloadingLatin ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          size={18}
+                          style={{marginRight: 10}}
+                        />
+                      ) : (
+                        <Icon
+                          name="download"
+                          color="#fff"
+                          style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                        />
+                      )}
                       <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
                     </View>
                   )}
@@ -137,11 +235,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         alignItems: 'center',
                         justifyContent: 'center',
                       }}>
-                      <Icon
-                        name="download"
-                        color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
-                      />
+                      {downloadingArabic ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          size={18}
+                          style={{marginRight: 10}}
+                        />
+                      ) : (
+                        <Icon
+                          name="download"
+                          color="#fff"
+                          style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                        />
+                      )}
                       <Image
                         source={require('../images/arabic.png')}
                         style={{width: 70, height: 25}}
@@ -158,10 +264,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           <Button
             icon="download"
             mode="contained"
-            onPress={() => downloadLink(englishLink)}
+            loading={downloading}
+            onPress={async () => {
+              setDownloading(true);
+              await downloadLink(
+                englishLink,
+                'The Quest of Amsiggel (text)',
+                true,
+              );
+              setDownloading(false);
+            }}
             uppercase={false}
-            labelStyle={{ fontSize: 20 }}
-            style={{margin: 10}}>
+            labelStyle={{fontSize: 20}}
+            style={{margin: 20}}>
             The Quest of Amsiggel (text)
           </Button>
         )}
@@ -169,10 +284,18 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           <Button
             icon="download"
             mode="contained"
-            onPress={() => downloadLink(frenchLink)}
+            onPress={async () => {
+              setDownloading(true);
+              await downloadLink(
+                frenchLink,
+                "Le Voyage d'Amsiggel (texte)",
+                true,
+              );
+              setDownloading(false);
+            }}
             uppercase={false}
-            labelStyle={{ fontSize: 20 }}
-            style={{margin: 10}}>
+            labelStyle={{fontSize: 20}}
+            style={{margin: 20}}>
             Le Voyage d'Amsiggel (texte)
           </Button>
         )}
@@ -198,7 +321,8 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
               return (
                 <TouchableOpacity
                   key={link}
-                  onPress={() => downloadLink(link)}
+                  disabled={secondaryDisabled(index)}
+                  onPress={() => downloadBerberSecondary(link, index)}
                   style={{
                     backgroundColor: colors.primary,
                     marginHorizontal: 40,
@@ -212,11 +336,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         flexDirection: 'row',
                         justifyContent: 'center',
                       }}>
-                      <Icon
-                        name="download"
-                        color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
-                      />
+                      {downloadingTifinaghSecondary ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          size={18}
+                          style={{marginRight: 10}}
+                        />
+                      ) : (
+                        <Icon
+                          name="download"
+                          color="#fff"
+                          style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                        />
+                      )}
                       <Image
                         source={require('../images/tifinagh.png')}
                         style={{width: 70, height: 25}}
@@ -230,11 +362,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         flexDirection: 'row',
                         justifyContent: 'center',
                       }}>
-                      <Icon
-                        name="download"
-                        color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
-                      />
+                      {downloadingLatinSecondary ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          size={18}
+                          style={{marginRight: 10}}
+                        />
+                      ) : (
+                        <Icon
+                          name="download"
+                          color="#fff"
+                          style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                        />
+                      )}
                       <Text style={{color: '#fff', fontSize: 20}}>Latin</Text>
                     </View>
                   )}
@@ -244,11 +384,19 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                         flexDirection: 'row',
                         justifyContent: 'center',
                       }}>
-                      <Icon
-                        name="download"
-                        color="#fff"
-                        style={{fontSize: 18, marginRight: 10, marginTop: 2}}
-                      />
+                      {downloadingArabicSecondary ? (
+                        <ActivityIndicator
+                          color="#fff"
+                          size={18}
+                          style={{marginRight: 10}}
+                        />
+                      ) : (
+                        <Icon
+                          name="download"
+                          color="#fff"
+                          style={{fontSize: 18, marginRight: 10, marginTop: 2}}
+                        />
+                      )}
                       <Image
                         source={require('../images/arabic.png')}
                         style={{width: 70, height: 25}}
@@ -266,9 +414,18 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             <Button
               icon="download"
               mode="contained"
-              onPress={() => downloadLink(englishPDF)}
+              loading={downloadingSecondary}
+              onPress={async () => {
+                setDownloadingSecondary(true);
+                await downloadLink(
+                  englishPDF,
+                  'Amsiggel and Bubker (text)',
+                  true,
+                );
+                setDownloadingSecondary(false);
+              }}
               style={{margin: 20}}
-              labelStyle={{ fontSize: 20 }}
+              labelStyle={{fontSize: 20}}
               uppercase={false}>
               Amsiggel and Bubker (text)
             </Button>
@@ -278,11 +435,16 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           <Button
             icon="download"
             mode="contained"
-            onPress={() => downloadLink(frenchPDF)}
+            loading={downloadingSecondary}
+            onPress={async () => {
+              setDownloadingSecondary(true);
+              await downloadLink(frenchPDF, 'Amsiggel et Bubker (texte)', true);
+              setDownloadingSecondary(false);
+            }}
             style={{margin: 20}}
-            labelStyle={{ fontSize: 20 }}
+            labelStyle={{fontSize: 20}}
             uppercase={false}>
-            Conversation avec Bubker (texte)
+            Amsiggel et Bubker (texte)
           </Button>
         )}
       </ScrollView>

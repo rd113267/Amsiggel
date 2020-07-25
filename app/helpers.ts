@@ -2,6 +2,8 @@ import {Alert, Platform, Linking} from 'react-native';
 import {Language, VideoDetails} from './types';
 import constants from './constants';
 import Share from 'react-native-share';
+import RNFetchBlob from 'rn-fetch-blob';
+import {request, PERMISSIONS} from 'react-native-permissions';
 
 export const getVideoDetails = async (id: string): Promise<VideoDetails> => {
   try {
@@ -41,42 +43,32 @@ export const getVideoIDs = (language: string) => {
   }
 };
 
-export const getAudioLinks = (
-  language?: string,
-): {full: string; firstHalf: string; secondHalf: string} => {
+export const getAudioLinks = (language?: string): {full: string} => {
   switch (language) {
     case Language.ENGLISH:
-      return {full: '335', firstHalf: '556', secondHalf: '558'};
+      return {full: '335'};
     case Language.FRENCH: {
-      return {full: '777', firstHalf: '773', secondHalf: '775'};
+      return {full: '777'};
     }
     default:
-      return {full: '585', firstHalf: '474', secondHalf: '476'};
+      return {full: '585'};
   }
 };
 
-export const getAudioLinkText = (
-  language?: string,
-): {fullText: string; firstHalfText: string; secondHalfText: string} => {
+export const getAudioLinkText = (language?: string): {fullText: string} => {
   switch (language) {
     case Language.ENGLISH:
       return {
         fullText: 'The Quest of Amsiggel (audio)',
-        firstHalfText: 'Amsiggel English 1-9 mp3',
-        secondHalfText: 'Amsiggel English 10-17 mp3',
       };
     case Language.FRENCH: {
       return {
         fullText: "Le Voyage d'Amsiggel (audio)",
-        firstHalfText: 'télécharge Amsiggel MP3 – chapitres 1-9',
-        secondHalfText: 'télécharge Amsiggel MP3 – chapitres 10-17',
       };
     }
     default:
       return {
         fullText: 'Amuddu n-Umsiggel (audio)',
-        firstHalfText: 'Amsiggel agzzum 1-9 mp3',
-        secondHalfText: 'Amsiggel agzzum 10-17 mp3',
       };
   }
 };
@@ -96,13 +88,30 @@ export const getDurationString = (seconds: number) => {
   return `${minutes}:${secs}`;
 };
 
-export const downloadLink = (link: string) => {
-  if (Platform.OS === 'ios') {
-    Share.open({
-      url: link,
-      saveToFiles: true,
-    });
-  } else {
-    Linking.openURL(link);
- }
+export const downloadLink = async (
+  link: string,
+  filename: string,
+  pdf?: boolean,
+) => {
+  const fileType = pdf ? '.pdf' : '.mp3';
+  try {
+    if (Platform.OS === 'ios') {
+      await Share.open({
+        url: link,
+        saveToFiles: true,
+        filename: `${filename}${fileType}`,
+      });
+    } else {
+      await request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
+      await RNFetchBlob.config({
+        addAndroidDownloads: {
+          notification: true,
+          useDownloadManager: true,
+          path: `${RNFetchBlob.fs.dirs.DownloadDir}/${filename}${fileType}`,
+        },
+      }).fetch('GET', link);
+    }
+  } catch (e) {
+    Alert.alert('Error', e.message);
+  }
 };

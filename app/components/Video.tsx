@@ -44,16 +44,35 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
     }
   };
 
+  const getTitle = () => {
+    if (language === Language.ENGLISH) {
+      return 'links';
+    }
+    if (language === Language.FRENCH) {
+      return 'liens';
+    }
+    return 'izdayn';
+  };
+
+
   return (
     <SafeAreaView
       style={{flex: 1, justifyContent: 'center', backgroundColor: '#fff'}}>
+      <Title
+        style={{
+          textAlign: 'center',
+          fontSize: 30,
+          marginTop: 10,
+        }}>
+        {getTitle()}
+      </Title>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
           justifyContent: 'center',
           padding: 20,
         }}>
-        <Title style={{ textAlign: 'center'}}>awal i-wass</Title>
+        <Title style={{textAlign: 'center'}}>awal i-wass</Title>
         <TouchableOpacity
           onPress={openAwalIwass}
           style={{
@@ -70,7 +89,7 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             resizeMode="contain"
           />
         </TouchableOpacity>
-        <Paragraph style={{ textAlign: 'center'}}>{getDescription()}</Paragraph>
+        <Paragraph style={{textAlign: 'center'}}>{getDescription()}</Paragraph>
       </ScrollView>
     </SafeAreaView>
   );

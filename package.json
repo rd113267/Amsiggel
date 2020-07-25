@@ -23,6 +23,7 @@
     "react-native-gesture-handler": "^1.6.1",
     "react-native-orientation-locker": "^1.1.8",
     "react-native-paper": "4.0.0-alpha.1",
+    "react-native-permissions": "^2.1.5",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.6",
     "react-native-screens": "^2.9.0",
@@ -30,7 +31,8 @@
     "react-native-vector-icons": "^6.6.0",
     "react-native-video": "^4.4.5",
     "react-native-video-controls": "^2.6.0",
-    "react-native-webview": "^10.3.2"
+    "react-native-webview": "^10.3.2",
+    "rn-fetch-blob": "^0.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
