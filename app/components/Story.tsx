@@ -102,7 +102,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
       default:
         setDownloadingArabicSecondary(true);
     }
-    await downloadLink(link, `Amuddu n-Umsiggel-${index + 1}`, true);
+    await downloadLink(link, `Amsiggel d-Bubker-${index + 1}`, true);
     switch (index) {
       case 0:
         setDownloadingTifinaghSecondary(false);
