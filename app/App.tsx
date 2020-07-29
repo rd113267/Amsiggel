@@ -10,7 +10,7 @@ import Story from './components/Story';
 import Video from './components/Video';
 import Contact from './components/Contact';
 import colors from './colors';
-import {Image} from 'react-native';
+import {Image, Platform} from 'react-native';
 import useLanguage from './hooks/UseLanguage';
 import FlagBanner from './components/commons/FlagBanner';
 import Orientation from 'react-native-orientation-locker';
@@ -52,11 +52,13 @@ const App = () => {
     [setFullscreen],
   );
   useEffect(() => {
-    Orientation.addOrientationListener(handleOrientation);
+    if (Platform.OS === 'android') {
+      Orientation.addOrientationListener(handleOrientation);
 
-    return () => {
-      Orientation.removeOrientationListener(handleOrientation);
-    };
+      return () => {
+        Orientation.removeOrientationListener(handleOrientation);
+      };
+    }
   }, [handleOrientation]);
 
   const Tabs = () => {
