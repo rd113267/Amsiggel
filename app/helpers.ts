@@ -1,8 +1,8 @@
 import {Alert, Platform, Linking} from 'react-native';
 import {Language, VideoDetails} from './types';
 import constants from './constants';
-import Share from 'react-native-share';
 import RNFetchBlob from 'rn-fetch-blob';
+import Share from 'react-native-share';
 import {request, PERMISSIONS} from 'react-native-permissions';
 
 export const getVideoDetails = async (id: string): Promise<VideoDetails> => {
@@ -99,6 +99,7 @@ export const downloadLink = async (
       await Share.open({
         url: link,
         saveToFiles: true,
+        failOnCancel: false,
         filename: `${filename}${fileType}`,
       });
     } else {
@@ -112,6 +113,10 @@ export const downloadLink = async (
       }).fetch('GET', link);
     }
   } catch (e) {
-    Alert.alert('Error', e.message);
+    if (Platform.OS === 'ios') {
+      Linking.openURL(link);
+    } else {
+      Alert.alert('Error', e.message);
+    }
   }
 };
