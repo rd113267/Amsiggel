@@ -8,6 +8,7 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabProps from '../types/TabProps';
 import colors from '../colors';
 import {Text, Title, Paragraph, Caption} from 'react-native-paper';
@@ -54,6 +55,13 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
     return 'izdayn';
   };
 
+  const openTachelhitApp = () => {
+
+  }
+
+  const openTachelhitWebsite = () => {
+    Linking.openURL('https://tachelhit.info')
+  }
 
   return (
     <SafeAreaView
@@ -76,20 +84,48 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
         <TouchableOpacity
           onPress={openAwalIwass}
           style={{
-            borderColor: colors.primary,
-            borderWidth: 2,
-            width: 110,
-            alignSelf: 'center',
-            borderRadius: 7,
             marginVertical: 10,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly'
           }}>
+          <Icon name="cellphone-android" size={100} />
           <Image
             source={require('../images/logo.png')}
-            style={{height: 100, alignSelf: 'center'}}
+            style={{height: 100, width: 100}}
             resizeMode="contain"
           />
         </TouchableOpacity>
         <Paragraph style={{textAlign: 'center'}}>{getDescription()}</Paragraph>
+        <Title style={{textAlign: 'center'}}>tachelhit info</Title>
+        <TouchableOpacity
+          onPress={openAwalIwass}
+          style={{
+            marginVertical: 10,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly'
+          }}>
+          <Icon name="cellphone-android" size={100} />
+          <Image
+            source={require('../images/tachelhitinfo.png')}
+            style={{height: 100, width: 100}}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+        <Title style={{textAlign: 'center'}}>tachelhit info</Title>
+        <TouchableOpacity
+          onPress={openTachelhitWebsite}
+          style={{
+            marginVertical: 10,
+            flexDirection: 'row',
+            justifyContent: 'space-evenly'
+          }}>
+          <Icon name="monitor" size={100} />
+          <Image
+            source={require('../images/tachelhitinfo.png')}
+            style={{height: 100, width: 100}}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
