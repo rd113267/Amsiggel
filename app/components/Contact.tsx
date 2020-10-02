@@ -7,15 +7,6 @@ import {Language} from '../types';
 const Contact: FunctionComponent<TabProps> = ({language}) => {
   const [loading, setLoading] = useState(false);
   const PHONE_NUMBER = '+212642596841';
-  const getWhatsAppLabel = () => {
-    if (language === Language.BERBER) {
-      return 'sawl-agh-d s-watsapp';
-    }
-    if (language === Language.FRENCH) {
-      return 'Contactez-nous via WhatsApp';
-    }
-    return 'Contact us via WhatsApp';
-  };
   const openWhatsApp = async () => {
     setLoading(true);
     try {
