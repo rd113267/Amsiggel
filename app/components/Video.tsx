@@ -113,7 +113,11 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
           <Title style={{textAlign: 'center'}}>tachelhit info</Title>
           <Title
             style={[
-              {textAlign: 'center', fontSize: 25},
+              {
+                textAlign: 'center',
+                fontSize: 25,
+                marginTop: Platform.select({android: 8, ios: 0}),
+              },
               globalStyles.arabicBold,
             ]}>
             تاشلحيت ءينفو
