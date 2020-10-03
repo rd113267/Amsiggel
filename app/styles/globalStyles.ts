@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 
 const {width} = Dimensions.get('window');
 const {height} = Dimensions.get('screen');
@@ -14,5 +14,16 @@ export default StyleSheet.create({
     marginTop: -(videoHeight / 2 + 50),
     marginLeft: width / 2 - 50,
     zIndex: 9,
+  },
+  tifinaghe: {
+    fontFamily: 'TamazightTifinaghe',
+  },
+  arabic: {
+    fontFamily:
+      Platform.OS === 'ios' ? 'ScheherazadeOTM2A-Regular' : 'ScheherazadeOTM2A',
+  },
+  arabicBold: {
+    fontFamily:
+      Platform.OS === 'ios' ? 'ScheherazadeOTM2A-Regular' : 'Scheherazade-Bold',
   },
 });

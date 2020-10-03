@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useState} from 'react';
+import React, {FunctionComponent} from 'react';
 import {
   SafeAreaView,
   Platform,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabProps from '../types/TabProps';
 import colors from '../colors';
 import {Text, Title, Paragraph, Caption} from 'react-native-paper';
 import {Language} from '../types';
+import globalStyles from '../styles/globalStyles';
 
 const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
-  const [loading, setLoading] = useState(false);
-
   const getDescription = () => {
     if (language === Language.ENGLISH) {
       return 'Each day we will send you a word of hope and assurance from the Tashelhayt Bible.';
@@ -28,7 +28,6 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
   };
   const openAwalIwass = async () => {
     try {
-      setLoading(true);
       if (Platform.OS === 'ios') {
         await Linking.openURL(
           'itms-apps://apps.apple.com/gb/app/awal-i-wass/id1511054521',
@@ -38,10 +37,8 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
           'https://play.google.com/store/apps/details?id=com.wordofgodforeachday',
         );
       }
-      setLoading(false);
     } catch (e) {
       Alert.alert('Error', e.message);
-      setLoading(false);
     }
   };
 
@@ -55,13 +52,25 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
     return 'izdayn';
   };
 
-  const openTachelhitApp = () => {
-
-  }
+  const openTachelhitApp = async () => {
+    try {
+      if (Platform.OS === 'ios') {
+        await Linking.openURL(
+          'https://apps.apple.com/us/app/tachelhit-info/id1530749221',
+        );
+      } else {
+        await Linking.openURL(
+          'https://play.google.com/store/apps/details?id=com.tachelhitinfo',
+        );
+      }
+    } catch (e) {
+      Alert.alert('Error', e.message);
+    }
+  };
 
   const openTachelhitWebsite = () => {
-    Linking.openURL('https://tachelhit.info')
-  }
+    Linking.openURL('https://tachelhit.info');
+  };
 
   return (
     <SafeAreaView
@@ -70,7 +79,6 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
         style={{
           textAlign: 'center',
           fontSize: 30,
-          marginTop: 10,
         }}>
         {getTitle()}
       </Title>
@@ -86,7 +94,7 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
           style={{
             marginVertical: 10,
             flexDirection: 'row',
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
           }}>
           <Icon name="cellphone-android" size={100} />
           <Image
@@ -95,14 +103,28 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             resizeMode="contain"
           />
         </TouchableOpacity>
-        <Paragraph style={{textAlign: 'center'}}>{getDescription()}</Paragraph>
-        <Title style={{textAlign: 'center'}}>tachelhit info</Title>
+        <Paragraph style={{textAlign: 'center', marginBottom: 10}}>
+          {getDescription()}
+        </Paragraph>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Title style={[{textAlign: 'center'}, globalStyles.tifinaghe]}>
+            taclHit infu
+          </Title>
+          <Title style={{textAlign: 'center'}}>tachelhit info</Title>
+          <Title
+            style={[
+              {textAlign: 'center', fontSize: 25},
+              globalStyles.arabicBold,
+            ]}>
+            تاشلحيت ءينفو
+          </Title>
+        </View>
         <TouchableOpacity
-          onPress={openAwalIwass}
+          onPress={openTachelhitApp}
           style={{
             marginVertical: 10,
             flexDirection: 'row',
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
           }}>
           <Icon name="cellphone-android" size={100} />
           <Image
@@ -111,13 +133,12 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             resizeMode="contain"
           />
         </TouchableOpacity>
-        <Title style={{textAlign: 'center'}}>tachelhit info</Title>
         <TouchableOpacity
           onPress={openTachelhitWebsite}
           style={{
             marginVertical: 10,
             flexDirection: 'row',
-            justifyContent: 'space-evenly'
+            justifyContent: 'space-evenly',
           }}>
           <Icon name="monitor" size={100} />
           <Image
