@@ -15,15 +15,4 @@ export default StyleSheet.create({
     marginLeft: width / 2 - 50,
     zIndex: 9,
   },
-  tifinaghe: {
-    fontFamily: 'TamazightTifinaghe',
-  },
-  arabic: {
-    fontFamily:
-      Platform.OS === 'ios' ? 'ScheherazadeOTM2A-Regular' : 'ScheherazadeOTM2A',
-  },
-  arabicBold: {
-    fontFamily:
-      Platform.OS === 'ios' ? 'ScheherazadeOTM2A-Regular' : 'Scheherazade-Bold',
-  },
 });

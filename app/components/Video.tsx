@@ -73,19 +73,19 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
   };
 
   return (
-    <SafeAreaView
-      style={{flex: 1, justifyContent: 'center', backgroundColor: '#fff'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: '#fff'}}>
       <Title
         style={{
           textAlign: 'center',
           fontSize: 30,
+          marginTop: 10,
+          marginBottom: 20,
         }}>
         {getTitle()}
       </Title>
       <ScrollView
         contentContainerStyle={{
           flexGrow: 1,
-          justifyContent: 'center',
           padding: 20,
         }}>
         <Title style={{textAlign: 'center'}}>awal i-wass</Title>
@@ -106,23 +106,9 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
         <Paragraph style={{textAlign: 'center', marginBottom: 10}}>
           {getDescription()}
         </Paragraph>
-        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <Title style={[{textAlign: 'center'}, globalStyles.tifinaghe]}>
-            taclHit infu
-          </Title>
-          <Title style={{textAlign: 'center'}}>tachelhit info</Title>
-          <Title
-            style={[
-              {
-                textAlign: 'center',
-                fontSize: 25,
-                marginTop: Platform.select({android: 8, ios: 0}),
-              },
-              globalStyles.arabicBold,
-            ]}>
-            تاشلحيت ءينفو
-          </Title>
-        </View>
+        <Title style={{textAlign: 'center', marginTop: 20}}>
+          tachelhit info
+        </Title>
         <TouchableOpacity
           onPress={openTachelhitApp}
           style={{

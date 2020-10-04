@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* AmsiggelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AmsiggelTests.m */; };
-		039EEC8153984DC6B949E4CB /* ScheherazadeOTM2A-Regular.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 293D3254DAD1448DA30D6A67 /* ScheherazadeOTM2A-Regular.TTF */; };
 		0A2275B624A76B900008431B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A2275B524A76B900008431B /* GoogleService-Info.plist */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
@@ -20,11 +19,8 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* AmsiggelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AmsiggelTests.m */; };
 		345A2CCD4FD0B0C58AEF50EA /* libPods-Amsiggel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D8FE950DDAC19B11D3597738 /* libPods-Amsiggel.a */; };
-		4BE1920A8EB04B19955FC46C /* TamazightTifinaghe.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B9528F9136A64A1198E57EC2 /* TamazightTifinaghe.ttf */; };
 		9629CED1BA9152587A5C41AC /* libPods-Amsiggel-AmsiggelTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE0AB2D76812CF8A37D5987B /* libPods-Amsiggel-AmsiggelTests.a */; };
-		A4F9EDEFAE8F4C09B9A24F7A /* Scheherazade-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60C9038B6F9B46B0A138B09D /* Scheherazade-Bold.ttf */; };
 		DA2581BE73CE51DF8E0AB61C /* libPods-Amsiggel-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 35D5A37A282E7469F639913A /* libPods-Amsiggel-tvOS.a */; };
-		FBE2378ACB3542BE8BB5FFE1 /* ScheherazadeOTM2A.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4077D6E52EB442F9EE867A6 /* ScheherazadeOTM2A.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -443,10 +439,6 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				0A2275B624A76B900008431B /* GoogleService-Info.plist in Resources */,
-				A4F9EDEFAE8F4C09B9A24F7A /* Scheherazade-Bold.ttf in Resources */,
-				039EEC8153984DC6B949E4CB /* ScheherazadeOTM2A-Regular.TTF in Resources */,
-				FBE2378ACB3542BE8BB5FFE1 /* ScheherazadeOTM2A.ttf in Resources */,
-				4BE1920A8EB04B19955FC46C /* TamazightTifinaghe.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
