@@ -26,6 +26,15 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
     }
     return 'ass f-wass rad-ak-ntazn awal imimn gh-warratn n-sidi rbbi. sfeld-as ar-ttzaamt s-rrja ishan.';
   };
+  const getDescription2 = () => {
+    if (language === Language.ENGLISH) {
+      return 'Enjoy our storehouse of spiritual treasures – videos, audios, downloads – the word of God with helpful teaching in Tashelhayt.';
+    }
+    if (language === Language.FRENCH) {
+      return 'Entrez dans notre maison de trésors spirituels - vidéos, audios, téléchargements – la parole de Dieu avec des enseignements encourageants en tachelhit.';
+    }
+    return 'kchem s-tgmmi-negh tsunfut, ar-tsflidt i-lkhbar issfrahn, ar-taqrat iwaliwn mimnin, ar-tssmuqqult lfidyuwat fulkinin';
+  };
   const openAwalIwass = async () => {
     try {
       if (Platform.OS === 'ios') {
@@ -137,6 +146,9 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             resizeMode="contain"
           />
         </TouchableOpacity>
+        <Paragraph style={{textAlign: 'center', marginBottom: 10}}>
+          {getDescription2()}
+        </Paragraph>
       </ScrollView>
     </SafeAreaView>
   );
