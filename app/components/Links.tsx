@@ -7,16 +7,13 @@ import {
   TouchableOpacity,
   Alert,
   ScrollView,
-  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import TabProps from '../types/TabProps';
-import colors from '../colors';
-import {Text, Title, Paragraph, Caption} from 'react-native-paper';
+import {Title, Paragraph} from 'react-native-paper';
 import {Language} from '../types';
-import globalStyles from '../styles/globalStyles';
 
-const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
+const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
   const getDescription = () => {
     if (language === Language.ENGLISH) {
       return 'Each day we will send you a word of hope and assurance from the Tashelhayt Bible.';
@@ -88,7 +85,6 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
           textAlign: 'center',
           fontSize: 30,
           marginTop: 10,
-          marginBottom: 20,
         }}>
         {getTitle()}
       </Title>
@@ -97,7 +93,9 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
           flexGrow: 1,
           padding: 20,
         }}>
-        <Title style={{textAlign: 'center'}}>awal i-wass</Title>
+        <Title style={{textAlign: 'center'}}>{`awal i-wass ${
+          language === Language.ENGLISH ? 'advertisement' : ''
+        }`}</Title>
         <TouchableOpacity
           onPress={openAwalIwass}
           style={{
@@ -105,19 +103,19 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
-          <Icon name="cellphone-android" size={100} />
+          <Icon name="cellphone-android" size={75} />
           <Image
             source={require('../images/logo.png')}
-            style={{height: 100, width: 100}}
+            style={{height: 75, width: 75}}
             resizeMode="contain"
           />
         </TouchableOpacity>
         <Paragraph style={{textAlign: 'center', marginBottom: 10}}>
           {getDescription()}
         </Paragraph>
-        <Title style={{textAlign: 'center', marginTop: 20}}>
-          tachelhit info
-        </Title>
+        <Title style={{textAlign: 'center', marginTop: 20}}>{`tachelhit info ${
+          language === Language.ENGLISH ? 'advertisement' : ''
+        }`}</Title>
         <TouchableOpacity
           onPress={openTachelhitApp}
           style={{
@@ -125,10 +123,10 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
-          <Icon name="cellphone-android" size={100} />
+          <Icon name="cellphone-android" size={75} />
           <Image
             source={require('../images/tachelhitinfo.png')}
-            style={{height: 100, width: 100}}
+            style={{height: 75, width: 75}}
             resizeMode="contain"
           />
         </TouchableOpacity>
@@ -139,10 +137,10 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
-          <Icon name="monitor" size={100} />
+          <Icon name="monitor" size={75} />
           <Image
             source={require('../images/tachelhitinfo.png')}
-            style={{height: 100, width: 100}}
+            style={{height: 75, width: 75}}
             resizeMode="contain"
           />
         </TouchableOpacity>
@@ -154,4 +152,4 @@ const Videos: FunctionComponent<TabProps> = ({language, navigation}) => {
   );
 };
 
-export default Videos;
+export default Links;

@@ -7,7 +7,7 @@ import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
 import Audio from './components/Audio';
 import Story from './components/Story';
-import Video from './components/Video';
+import Links from './components/Links';
 import Contact from './components/Contact';
 import colors from './colors';
 import {Image, Platform} from 'react-native';
@@ -135,7 +135,7 @@ const App = () => {
           name="Video"
           key="Video"
           children={({navigation}) => (
-            <Video
+            <Links
               fullscreen={fullscreen}
               setFullscreen={setFullscreen}
               language={language}
