@@ -50,7 +50,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
 
   const getTitle = () => {
     if (language === Language.ENGLISH) {
-      return 'links';
+      return 'Free offers';
     }
     if (language === Language.FRENCH) {
       return 'liens';
@@ -93,9 +93,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
           flexGrow: 1,
           padding: 20,
         }}>
-        <Title style={{textAlign: 'center'}}>{`awal i-wass ${
-          language === Language.ENGLISH ? 'advertisement' : ''
-        }`}</Title>
+        <Title style={{textAlign: 'center'}}>awal i-wass</Title>
         <TouchableOpacity
           onPress={openAwalIwass}
           style={{
@@ -113,9 +111,9 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
         <Paragraph style={{textAlign: 'center', marginBottom: 10}}>
           {getDescription()}
         </Paragraph>
-        <Title style={{textAlign: 'center', marginTop: 20}}>{`tachelhit info ${
-          language === Language.ENGLISH ? 'advertisement' : ''
-        }`}</Title>
+        <Title style={{textAlign: 'center', marginTop: 20}}>
+          tachelhit info
+        </Title>
         <TouchableOpacity
           onPress={openTachelhitApp}
           style={{
