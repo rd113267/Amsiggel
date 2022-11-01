@@ -86,7 +86,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
           fontSize: 30,
           marginTop: 10,
         }}>
-        {getTitle()}
+        {`${getTitle()} \n(More apps)`}
       </Title>
       <ScrollView
         contentContainerStyle={{
