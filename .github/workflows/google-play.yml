@@ -30,3 +30,4 @@ jobs:
           whatsNewDirectory: whatsnew
           #mappingFile: /app/build/outputs/mapping/release/mapping.txt
           changesNotSentForReview: true
+          status: draft
