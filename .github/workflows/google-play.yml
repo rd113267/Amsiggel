@@ -28,6 +28,6 @@ jobs:
           track: production
           #userFraction: 0.33
           whatsNewDirectory: whatsnew
-          #mappingFile: /app/build/outputs/mapping/release/mapping.txt
-          changesNotSentForReview: true
+          # mappingFile: /app/build/outputs/mapping/release/mapping.txt
+          # changesNotSentForReview: true
           status: draft
