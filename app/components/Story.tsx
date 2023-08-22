@@ -147,8 +147,8 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           justifyContent:
             language === Language.BERBER ? 'flex-start' : 'center',
         }}>
-        <View style={{flexDirection: 'row'}}>
-          {firstRowImages.map((image) => {
+        <View style={{flexDirection: 'row', minHeight: 150}}>
+          {firstRowImages.map(image => {
             return (
               <Image
                 key={image}
@@ -161,7 +161,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           })}
         </View>
         {language === Language.BERBER && (
-          <>
+          <View style={{minHeight: 220}}>
             <Title style={{alignSelf: 'center', marginBottom: 10}}>
               Amuddu n-Umsiggel
             </Title>
@@ -258,7 +258,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                 </TouchableOpacity>
               );
             })}
-          </>
+          </View>
         )}
         {language === Language.ENGLISH && (
           <Button
@@ -299,8 +299,8 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             Le Voyage d'Amsiggel (texte)
           </Button>
         )}
-        <View style={{flexDirection: 'row'}}>
-          {secondRowImages.map((image) => {
+        <View style={{flexDirection: 'row', minHeight: 150}}>
+          {secondRowImages.map(image => {
             return (
               <Image
                 key={image}
@@ -313,7 +313,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
         </View>
 
         {language === Language.BERBER && (
-          <>
+          <View style={{minHeight: 220}}>
             <Title style={{alignSelf: 'center', marginBottom: 10}}>
               Amsiggel d-Bubker
             </Title>
@@ -407,7 +407,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
                 </TouchableOpacity>
               );
             })}
-          </>
+          </View>
         )}
         {language === Language.ENGLISH && (
           <>

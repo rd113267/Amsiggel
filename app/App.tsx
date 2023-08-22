@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, getFocusedRouteNameFromRoute} from '@react-navigation/native';
 import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -10,7 +10,7 @@ import Story from './components/Story';
 import Links from './components/Links';
 import Contact from './components/Contact';
 import colors from './colors';
-import {Image, Platform} from 'react-native';
+import {Alert, Image, Platform} from 'react-native';
 import useLanguage from './hooks/UseLanguage';
 import FlagBanner from './components/commons/FlagBanner';
 import Orientation from 'react-native-orientation-locker';
@@ -189,7 +189,8 @@ const App = () => {
               },
               header: (props) => {
                 //@ts-ignore
-                if (!route.state || route.state.index === 0) {
+                const name = getFocusedRouteNameFromRoute(route);
+                if (name === 'Home') {
                   return <FlagBanner setNewLanguage={setNewLanguage} />;
                 }
                 return null;

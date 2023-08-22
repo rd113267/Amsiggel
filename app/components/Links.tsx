@@ -36,7 +36,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
     try {
       if (Platform.OS === 'ios') {
         await Linking.openURL(
-          'itms-apps://apps.apple.com/gb/app/awal-i-wass/id1511054521',
+          'https://apps.apple.com/gb/app/awal-i-wass/id1511054521',
         );
       } else {
         await Linking.openURL(
