@@ -1,5 +1,12 @@
 import React, {FunctionComponent, useState} from 'react';
-import {Text, View, Image, SafeAreaView, ScrollView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import TabProps from '../types/TabProps';
 import {Language} from '../types';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -147,12 +154,17 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           justifyContent:
             language === Language.BERBER ? 'flex-start' : 'center',
         }}>
-        <View style={{flexDirection: 'row', minHeight: 150}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            minHeight: Dimensions.get('window').width / 4,
+            alignItems: 'center',
+          }}>
           {firstRowImages.map(image => {
             return (
               <Image
                 key={image}
-                style={{flex: 1, marginVertical: -15}}
+                style={{flex: 1}}
                 resizeMode="contain"
                 resizeMethod="resize"
                 source={image}
@@ -161,7 +173,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
           })}
         </View>
         {language === Language.BERBER && (
-          <View style={{minHeight: 220}}>
+          <View style={{marginTop: -15}}>
             <Title style={{alignSelf: 'center', marginBottom: 10}}>
               Amuddu n-Umsiggel
             </Title>
@@ -299,12 +311,17 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
             Le Voyage d'Amsiggel (texte)
           </Button>
         )}
-        <View style={{flexDirection: 'row', minHeight: 150}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            minHeight: Dimensions.get('window').width / 4,
+            alignItems: 'center',
+          }}>
           {secondRowImages.map(image => {
             return (
               <Image
                 key={image}
-                style={{flex: 1, marginVertical: -15}}
+                style={{flex: 1}}
                 resizeMode="contain"
                 source={image}
               />
@@ -313,7 +330,7 @@ const Story: FunctionComponent<TabProps> = ({language}) => {
         </View>
 
         {language === Language.BERBER && (
-          <View style={{minHeight: 220}}>
+          <View style={{marginTop: -15}}>
             <Title style={{alignSelf: 'center', marginBottom: 10}}>
               Amsiggel d-Bubker
             </Title>
