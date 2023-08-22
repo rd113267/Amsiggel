@@ -36,7 +36,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
     try {
       if (Platform.OS === 'ios') {
         await Linking.openURL(
-          'https://apps.apple.com/gb/app/awal-i-wass/id1511054521',
+          'itms-apps://apps.apple.com/gb/app/awal-i-wass/id1511054521',
         );
       } else {
         await Linking.openURL(
@@ -62,7 +62,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
     try {
       if (Platform.OS === 'ios') {
         await Linking.openURL(
-          'https://apps.apple.com/us/app/tachelhit-info/id1530749221',
+          'itms-apps://apps.apple.com/us/app/tachelhit-info/id1530749221',
         );
       } else {
         await Linking.openURL(
