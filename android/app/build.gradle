@@ -90,11 +90,6 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-    }
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
         release {
             if (project.hasProperty('AMSIGGEL_UPLOAD_STORE_FILE')) {
                 storeFile file(AMSIGGEL_UPLOAD_STORE_FILE)
@@ -102,6 +97,16 @@ android {
                 keyAlias AMSIGGEL_KEY_ALIAS
                 keyPassword AMSIGGEL_UPLOAD_KEY_PASSWORD
             }
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+          release {
+              signingConfig signingConfigs.release
+              minifyEnabled enableProguardInReleaseBuilds
+              proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 }
