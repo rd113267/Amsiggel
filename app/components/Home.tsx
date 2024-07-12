@@ -1,10 +1,4 @@
-import React, {
-  FunctionComponent,
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, {FunctionComponent, useEffect, useRef, useState} from 'react';
 import {
   View,
   Dimensions,
@@ -16,7 +10,7 @@ import {
 import Orientation from 'react-native-orientation-locker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Video from 'react-native-video';
-import {getVideoDetails, getVideoIDs} from '../helpers';
+import {getVideoDetails, getVideoURLs} from '../helpers';
 import TabProps from '../types/TabProps';
 import {ActivityIndicator} from 'react-native-paper';
 import VideoPlayer from 'react-native-video-controls';
@@ -37,11 +31,8 @@ const Home: FunctionComponent<TabProps> = ({
   setFullscreen,
 }) => {
   const [paused, setPaused] = useState(true);
-  const [loading, setLoading] = useState(true);
-  const [videoDetails, setVideoDetails] = useState<VideoDetails>();
   const [currentVideo, setCurrentVideo] = useState(0);
   const videoRef = useRef<Video>(null);
-
 
   useEffect(() => {
     if (fullscreen) {
@@ -53,19 +44,9 @@ const Home: FunctionComponent<TabProps> = ({
     }
   }, [fullscreen]);
 
-  useEffect(() => {
-    const getDetails = async (code: string) => {
-      setLoading(true);
-      const videosDetails = await getVideoDetails(code);
-      setVideoDetails(videosDetails);
-      setLoading(false);
-    };
-    if (language) {
-      const codes = getVideoIDs(language);
-      const code = codes[currentVideo];
-      getDetails(code);
-    }
-  }, [currentVideo, language]);
+  const videoUrl = language ? getVideoURLs(language)[currentVideo] : '';
+
+  const loading = !videoUrl;
 
   useEffect(() => {
     if (Platform.OS === 'android' && !Orientation.isLocked()) {
@@ -103,7 +84,7 @@ const Home: FunctionComponent<TabProps> = ({
     }
   };
 
-  if (fullscreen && videoDetails) {
+  if (fullscreen && videoUrl) {
     if (loading) {
       return (
         <View style={{backgroundColor: '#000', flex: 1}}>
@@ -113,7 +94,7 @@ const Home: FunctionComponent<TabProps> = ({
     } else {
       return (
         <VideoPlayer
-          source={{uri: videoDetails.videoUrl}}
+          source={{uri: videoUrl}}
           disableVolume
           disableFullscreen
           paused={paused}
@@ -128,7 +109,7 @@ const Home: FunctionComponent<TabProps> = ({
   }
   return (
     <View style={{backgroundColor: '#fff', justifyContent: 'center', flex: 1}}>
-      {!loading && videoDetails ? (
+      {!loading ? (
         <View>
           <TouchableOpacity
             onPress={() => {
@@ -140,7 +121,7 @@ const Home: FunctionComponent<TabProps> = ({
             }}>
             <Video
               ref={videoRef}
-              source={{uri: videoDetails.videoUrl}}
+              source={{uri: videoUrl}}
               paused={paused || Platform.OS === 'android'}
               onLoad={() => {
                 if (Platform.OS === 'android') {
@@ -152,7 +133,7 @@ const Home: FunctionComponent<TabProps> = ({
               onFullscreenPlayerDidPresent={() => setPaused(false)}
               onFullscreenPlayerDidDismiss={() => setPaused(true)}
               onEnd={goNextVideo}
-              onError={(e) => Alert.alert('Error', e.error.errorString)}
+              onError={e => Alert.alert('Error', e.error.errorString)}
             />
             <View>
               <Icon

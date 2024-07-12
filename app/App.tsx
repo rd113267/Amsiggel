@@ -1,5 +1,8 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {NavigationContainer, getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from '@react-navigation/native';
 import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -16,6 +19,7 @@ import FlagBanner from './components/commons/FlagBanner';
 import Orientation from 'react-native-orientation-locker';
 import {VideoDetails, Language} from './types';
 import Legal from './components/Legal';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -64,11 +68,15 @@ const App = () => {
   const Tabs = () => {
     return (
       <Tab.Navigator
-        tabBarOptions={{
-          activeTintColor: colors.secondary,
-          inactiveTintColor: '#fff',
-          style: {backgroundColor: colors.primary},
-          showLabel: false,
+        screenOptions={{
+          tabBarActiveTintColor: colors.secondary,
+          tabBarInactiveTintColor: '#fff',
+          tabBarStyle: {
+            backgroundColor: colors.primary,
+            display: fullscreen ? 'none' : 'flex',
+          },
+          tabBarShowLabel: false,
+          headerShown: false,
         }}>
         <Tab.Screen
           name="Home"
@@ -81,7 +89,7 @@ const App = () => {
               navigation={navigation}
             />
           )}
-          options={(route) => ({
+          options={route => ({
             tabBarVisible: !fullscreen,
             tabBarIcon: ({focused, color, size}) => (
               <Image
@@ -102,7 +110,7 @@ const App = () => {
               navigation={navigation}
             />
           )}
-          options={(route) => ({
+          options={route => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
                 style={{tintColor: color, height: size, width: size}}
@@ -122,7 +130,7 @@ const App = () => {
               navigation={navigation}
             />
           )}
-          options={(route) => ({
+          options={route => ({
             tabBarIcon: ({focused, color, size}) => (
               <Image
                 style={{tintColor: color, height: size, width: size}}
@@ -144,7 +152,7 @@ const App = () => {
               navigation={navigation}
             />
           )}
-          options={(route) => ({
+          options={route => ({
             tabBarVisible: !fullscreen,
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="link" size={size} color={color} />
@@ -162,7 +170,7 @@ const App = () => {
               navigation={navigation}
             />
           )}
-          options={(route) => ({
+          options={route => ({
             tabBarIcon: ({focused, color, size}) => (
               <Icon name="whatsapp" size={size} color={color} />
             ),
@@ -172,46 +180,48 @@ const App = () => {
     );
   };
   return (
-    <PaperProvider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Tabs"
-            component={Tabs}
-            options={({route}) => ({
-              headerShown: !fullscreen,
-              headerTitle: '',
-              headerStyle: {
-                backgroundColor: colors.primary,
-              },
-              headerTitleStyle: {
-                color: '#fff',
-              },
-              header: (props) => {
-                //@ts-ignore
-                const name = getFocusedRouteNameFromRoute(route);
-                if (name === 'Home') {
-                  return <FlagBanner setNewLanguage={setNewLanguage} />;
-                }
-                return null;
-              },
-            })}
-          />
-          <Stack.Screen
-            name="Legal"
-            key="Legal"
-            children={() => <Legal language={language} />}
-            options={() => ({
-              headerTitle:
-                language && language === Language.ENGLISH
-                  ? 'Legal'
-                  : 'Mentions légales',
-              headerBackTitleStyle: {display: 'none'},
-            })}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Tabs"
+              component={Tabs}
+              options={({route}) => ({
+                headerShown: !fullscreen,
+                headerTitle: '',
+                headerStyle: {
+                  backgroundColor: colors.primary,
+                },
+                headerTitleStyle: {
+                  color: '#fff',
+                },
+                header: props => {
+                  //@ts-ignore
+                  const name = getFocusedRouteNameFromRoute(route);
+                  if (name === 'Home') {
+                    return <FlagBanner setNewLanguage={setNewLanguage} />;
+                  }
+                  return null;
+                },
+              })}
+            />
+            <Stack.Screen
+              name="Legal"
+              key="Legal"
+              children={() => <Legal language={language} />}
+              options={() => ({
+                headerTitle:
+                  language && language === Language.ENGLISH
+                    ? 'Legal'
+                    : 'Mentions légales',
+                headerBackTitleStyle: {display: 'none'},
+              })}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 };
 

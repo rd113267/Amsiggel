@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* AmsiggelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AmsiggelTests.m */; };
-		0A2275B624A76B900008431B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0A2275B524A76B900008431B /* GoogleService-Info.plist */; };
 		0AF320112A93CD0B00C68DBC /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0AF3200F2A93CD0B00C68DBC /* AppDelegate.mm */; };
 		0AF320122A93CD0B00C68DBC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0AF320102A93CD0B00C68DBC /* LaunchScreen.storyboard */; };
 		0AF320182A93CF7700C68DBC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AF320172A93CF7700C68DBC /* Images.xcassets */; };
@@ -42,7 +41,6 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AmsiggelTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AmsiggelTests.m; sourceTree = "<group>"; };
 		013663DB83EC41FFB3E2D31C /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
-		0A2275B524A76B900008431B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0A7A660924A93CC800DA2818 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		0A7A660A24A93CC800DA2818 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		0A7A660B24A93CC800DA2818 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -95,6 +93,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		EE280C2CDC4D4B07B9F2C60E /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		F6ED7D57786C4D9AA9B32C63 /* AntDesign.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AntDesign.ttf; path = "../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf"; sourceTree = "<group>"; };
+		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = Amsiggel/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +166,7 @@
 				0A7A661624A93CC800DA2818 /* EvilIcons.ttf */,
 				0A7A661724A93CC800DA2818 /* SimpleLineIcons.ttf */,
 				0A7A661824A93CC800DA2818 /* MaterialIcons.ttf */,
+				13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */,
 			);
 			name = Fonts;
 			path = "../node_modules/react-native-vector-icons/Fonts";
@@ -208,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				0A7A660824A93CC800DA2818 /* Fonts */,
-				0A2275B524A76B900008431B /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Amsiggel */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* AmsiggelTests */,
@@ -420,7 +419,6 @@
 			files = (
 				0AF320182A93CF7700C68DBC /* Images.xcassets in Resources */,
 				0AF320122A93CD0B00C68DBC /* LaunchScreen.storyboard in Resources */,
-				0A2275B624A76B900008431B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

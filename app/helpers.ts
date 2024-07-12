@@ -21,25 +21,14 @@ export const getVideoDetails = async (id: string): Promise<VideoDetails> => {
   }
 };
 
-export const getHomeVideoID = (language: string) => {
+export const getVideoURLs = (language: string) => {
   switch (language) {
     case Language.ENGLISH:
-      return constants.ENGLISH_VIMEO_CODE;
+      return constants.ENGLISH_VIMEO_URLS;
     case Language.FRENCH:
-      return constants.FRENCH_VIMEO_CODE;
+      return constants.FRENCH_VIMEO_URLS;
     default:
-      return constants.BERBER_VIMEO_CODE;
-  }
-};
-
-export const getVideoIDs = (language: string) => {
-  switch (language) {
-    case Language.ENGLISH:
-      return constants.ENGLISH_VIMEO_CODES;
-    case Language.FRENCH:
-      return constants.FRENCH_VIMEO_CODES;
-    default:
-      return constants.BERBER_VIMEO_CODES;
+      return constants.BERBER_VIMEO_URLS;
   }
 };
 
