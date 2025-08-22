@@ -1,14 +1,16 @@
-import {useEffect} from 'react';
-import {BackHandler} from 'react-native';
+import { useEffect } from 'react';
+import { BackHandler } from 'react-native';
 
-const useBackHandler = (handler: () => any) => {
+const useBackHandler = (handler: () => boolean) => {
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', handler);
+    const subscription = BackHandler.addEventListener(
+      'hardwareBackPress',
+      handler
+    );
 
-    return () => {
-      BackHandler.removeEventListener('hardwareBackPress', handler);
-    };
+    return () => subscription.remove();
   }, [handler]);
 };
 
 export default useBackHandler;
+

@@ -1,8 +1,8 @@
 import React, {FunctionComponent, useRef} from 'react';
-import {View, Text, SafeAreaView} from 'react-native';
 import WebView from 'react-native-webview';
 import LegalProps from '../types/LegalProps';
 import {Language} from '../types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Legal: FunctionComponent<LegalProps> = ({language}) => {
   const getUri = () => {

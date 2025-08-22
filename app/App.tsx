@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/native';
 import {createStackNavigator, Header} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@react-native-vector-icons/material-design-icons';
 import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import Home from './components/Home';
 import Audio from './components/Audio';
@@ -20,6 +20,7 @@ import Orientation from 'react-native-orientation-locker';
 import {VideoDetails, Language} from './types';
 import Legal from './components/Legal';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -181,46 +182,46 @@ const App = () => {
   };
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <PaperProvider theme={theme}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Tabs"
-              component={Tabs}
-              options={({route}) => ({
-                headerShown: !fullscreen,
-                headerTitle: '',
-                headerStyle: {
-                  backgroundColor: colors.primary,
-                },
-                headerTitleStyle: {
-                  color: '#fff',
-                },
-                header: props => {
-                  //@ts-ignore
-                  const name = getFocusedRouteNameFromRoute(route);
-                  if (name === 'Home') {
-                    return <FlagBanner setNewLanguage={setNewLanguage} />;
-                  }
-                  return null;
-                },
-              })}
-            />
-            <Stack.Screen
-              name="Legal"
-              key="Legal"
-              children={() => <Legal language={language} />}
-              options={() => ({
-                headerTitle:
-                  language && language === Language.ENGLISH
-                    ? 'Legal'
-                    : 'Mentions légales',
-                headerBackTitleStyle: {display: 'none'},
-              })}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </PaperProvider>
+        <PaperProvider theme={theme}>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Tabs"
+                component={Tabs}
+                options={({route}) => ({
+                  headerShown: !fullscreen,
+                  headerTitle: '',
+                  headerStyle: {
+                    backgroundColor: colors.primary,
+                  },
+                  headerTitleStyle: {
+                    color: '#fff',
+                  },
+                  header: props => {
+                    //@ts-ignore
+                    const name = getFocusedRouteNameFromRoute(route);
+                    if (name === 'Home') {
+                      return <FlagBanner setNewLanguage={setNewLanguage} />;
+                    }
+                    return null;
+                  },
+                })}
+              />
+              <Stack.Screen
+                name="Legal"
+                key="Legal"
+                children={() => <Legal language={language} />}
+                options={() => ({
+                  headerTitle:
+                    language && language === Language.ENGLISH
+                      ? 'Legal'
+                      : 'Mentions légales',
+                  headerBackTitleStyle: {display: 'none'},
+                })}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </PaperProvider>
     </GestureHandlerRootView>
   );
 };

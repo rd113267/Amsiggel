@@ -1,7 +1,8 @@
 import React, {FunctionComponent } from 'react';
-import {View, SafeAreaView, TouchableOpacity, Image} from 'react-native';
+import {TouchableOpacity, Image} from 'react-native';
 import colors from '../../colors';
 import {Language} from '../../types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const FlagBanner: FunctionComponent<{
   setNewLanguage: (language: Language) => void;

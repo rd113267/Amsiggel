@@ -1,8 +1,9 @@
 import React, {FunctionComponent, useState} from 'react';
-import {SafeAreaView, Linking, Platform, Alert} from 'react-native';
+import {Linking, Platform, Alert} from 'react-native';
 import TabProps from '../types/TabProps';
 import {Button} from 'react-native-paper';
 import {Language} from '../types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Contact: FunctionComponent<TabProps> = ({language}) => {
   const [loading, setLoading] = useState(false);

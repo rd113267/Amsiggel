@@ -1,6 +1,5 @@
 import React, {FunctionComponent} from 'react';
 import {
-  SafeAreaView,
   Platform,
   Linking,
   Image,
@@ -8,10 +7,12 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@react-native-vector-icons/material-icons';
+import MaterialDesignIcon from '@react-native-vector-icons/material-design-icons';
 import TabProps from '../types/TabProps';
 import {Title, Paragraph} from 'react-native-paper';
 import {Language} from '../types';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
   const getDescription = () => {
@@ -101,7 +102,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
-          <Icon name="cellphone-android" size={75} />
+          <Icon name="phone-android" size={75} />
           <Image
             source={require('../images/logo.png')}
             style={{height: 75, width: 75}}
@@ -121,7 +122,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
-          <Icon name="cellphone-android" size={75} />
+          <Icon name="phone-android" size={75} />
           <Image
             source={require('../images/tachelhitinfo.png')}
             style={{height: 75, width: 75}}
@@ -135,7 +136,7 @@ const Links: FunctionComponent<TabProps> = ({language, navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-evenly',
           }}>
-          <Icon name="monitor" size={75} />
+          <MaterialDesignIcon name="monitor" size={75} />
           <Image
             source={require('../images/tachelhitinfo.png')}
             style={{height: 75, width: 75}}

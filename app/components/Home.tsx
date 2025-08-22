@@ -8,11 +8,12 @@ import {
   Alert,
 } from 'react-native';
 import Orientation from 'react-native-orientation-locker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Video from 'react-native-video';
+import Icon from '@react-native-vector-icons/material-design-icons';
+import Video, { VideoRef } from 'react-native-video';
 import {getVideoDetails, getVideoURLs} from '../helpers';
 import TabProps from '../types/TabProps';
 import {ActivityIndicator} from 'react-native-paper';
+// @ts-ignore
 import VideoPlayer from 'react-native-video-controls';
 import useBackHandler from '../hooks/UseBackHandler';
 import globalStyles from '../styles/globalStyles';
@@ -32,7 +33,7 @@ const Home: FunctionComponent<TabProps> = ({
 }) => {
   const [paused, setPaused] = useState(true);
   const [currentVideo, setCurrentVideo] = useState(0);
-  const videoRef = useRef<Video>(null);
+  const videoRef = useRef<VideoRef>(null);
 
   useEffect(() => {
     if (fullscreen) {
@@ -60,6 +61,7 @@ const Home: FunctionComponent<TabProps> = ({
       Orientation.lockToPortrait();
       return true;
     }
+    return false;
   });
 
   const goNextVideo = () => {

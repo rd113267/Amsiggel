@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Image,
-  SafeAreaView,
   ScrollView,
   Dimensions,
 } from 'react-native';
@@ -11,9 +10,10 @@ import TabProps from '../types/TabProps';
 import {Language} from '../types';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import colors from '../colors';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from '@react-native-vector-icons/material-design-icons';
 import {downloadLink} from '../helpers';
 import {Button, Title, ActivityIndicator} from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const image1 = require('../images/audio9.jpg');
 const image2 = require('../images/audio10.jpg');
